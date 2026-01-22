@@ -318,6 +318,50 @@
   </button>
 </nav>
 
+    <!-- REPORT VIEW (missing in your current HTML) -->
+<div id="report-view" class="hidden print-only max-w-3xl mx-auto p-6 bg-white">
+  <div class="flex items-center justify-between mb-6 no-print">
+    <button onclick="closeReport()" class="px-4 py-2 rounded-lg bg-slate-900 text-yellow-400 font-black uppercase text-xs">
+      Back
+    </button>
+    <button onclick="window.print()" class="px-4 py-2 rounded-lg bg-black text-white font-black uppercase text-xs">
+      Print / Save PDF
+    </button>
+  </div>
+
+  <div class="border-b pb-4 mb-4">
+    <div class="text-xs uppercase font-black text-slate-400 tracking-widest" id="report-date">--</div>
+    <div class="text-2xl font-black mt-1" id="report-job-title">--</div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="p-4 border rounded-xl">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">Received</div>
+      <div class="text-2xl font-black" id="report-received-val">--</div>
+    </div>
+    <div class="p-4 border rounded-xl">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">Depth</div>
+      <div class="text-2xl font-black" id="report-depth">--</div>
+    </div>
+    <div class="p-4 border rounded-xl">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">Yield</div>
+      <div class="text-2xl font-black" id="report-yield">--</div>
+    </div>
+  </div>
+
+  <table class="w-full border-collapse text-sm">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="p-3 border text-left">Load</th>
+        <th class="p-3 border text-center">Time</th>
+        <th class="p-3 border text-center">Unit</th>
+        <th class="p-3 border text-right">Tons</th>
+      </tr>
+    </thead>
+    <tbody id="report-table-body"></tbody>
+  </table>
+</div>
+
 
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black text-yellow-400 px-6 py-3 rounded-full shadow-2xl transition-opacity opacity-0 pointer-events-none z-[200] font-black text-xs uppercase tracking-widest border border-yellow-400/30 text-center">Action Applied</div>
 
@@ -852,3 +896,4 @@
 </body>
 
 </html>
+
