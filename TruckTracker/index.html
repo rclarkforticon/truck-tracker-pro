@@ -295,25 +295,29 @@
         </main>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-[#facc15]">Dashboard</span>
-        </button>
-        <button onclick="switchTab('fleet')" id="nav-fleet" class="flex flex-col items-center p-2 text-slate-500 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Fleet</span>
-        </button>
-        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center p-2 text-slate-500 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52,.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1,4.71-7.14l2.48-23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Config</span>
-        </button>
-        <button onclick="generateReport()" class="flex flex-col items-center p-2 text-slate-500 hover:text-yellow-400 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-center text-slate-400">Run report</span>
-        </button>
-    </nav>
+   <!-- BOTTOM NAVIGATION -->
+<nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden">
+  <button type="button" data-tab="dashboard" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg>
+    <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-[#facc15]">Dashboard</span>
+  </button>
+
+  <button type="button" data-tab="fleet" id="nav-fleet" class="flex flex-col items-center p-2 text-slate-500 transition-all">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg>
+    <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Fleet</span>
+  </button>
+
+  <button type="button" data-tab="settings" id="nav-settings" class="flex flex-col items-center p-2 text-slate-500 transition-all">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52,.75,81.16,81.16,0,0,0,13.92,8.03,8,8,0,0,1,4.71,7.14l2.48,23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0,13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg>
+    <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Config</span>
+  </button>
+
+  <button type="button" id="nav-report" class="flex flex-col items-center p-2 text-slate-500 hover:text-yellow-400 transition-all">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg>
+    <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-center text-slate-400">Run report</span>
+  </button>
+</nav>
+
 
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black text-yellow-400 px-6 py-3 rounded-full shadow-2xl transition-opacity opacity-0 pointer-events-none z-[200] font-black text-xs uppercase tracking-widest border border-yellow-400/30 text-center">Action Applied</div>
 
@@ -446,6 +450,7 @@
 
         // DOM-SAFE AUTH LISTENER
         window.addEventListener('DOMContentLoaded', () => {
+            wireBottomNav();
             onAuthStateChanged(auth, (u) => {
                 user = u;
                 const viewAuth = document.getElementById('view-auth');
@@ -564,6 +569,28 @@
             window.updateUI();
             if (tab === 'fleet') window.renderFleet();
         };
+
+        function wireBottomNav() {
+  // Tabs (Dashboard/Fleet/Settings)
+  document.querySelectorAll('#bottom-nav [data-tab]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const tab = btn.getAttribute('data-tab');
+      if (typeof window.switchTab === 'function') window.switchTab(tab);
+    });
+  });
+
+  // Report button
+  const reportBtn = document.getElementById('nav-report');
+  if (reportBtn) {
+    reportBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof window.generateReport === 'function') window.generateReport();
+    });
+  }
+}
 
         window.renderHistory = () => {
             const list = document.getElementById('load-list'); if(!list) return;
@@ -823,4 +850,5 @@
         window.dismissPlantBanner = () => { window.state.plantBannerDismissed = true; window.saveToCloud(); if(document.getElementById('plant-close-banner')) document.getElementById('plant-close-banner').classList.add('hidden'); };
     </script>
 </body>
+
 </html>
