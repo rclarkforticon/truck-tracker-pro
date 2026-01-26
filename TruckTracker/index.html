@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; padding-bottom: 110px; }
         .progress-bar { transition: width 0.5s ease-in-out; }
         .heavy-glow { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); border-color: #ef4444 !important; }
@@ -25,7 +26,7 @@
         .hidden { display: none !important; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen font-medium">
+<body class="bg-slate-50 text-slate-900 min-h-screen font-medium text-black">
 
     <!-- AUTHENTICATION VIEW -->
     <div id="view-auth" class="min-h-screen flex items-center justify-center p-6 bg-slate-900">
@@ -116,7 +117,7 @@
                     <p class="text-[10px] font-black uppercase tracking-tight leading-none mb-1">Plant Closing Imminent</p>
                     <p id="plant-close-text" class="text-xs font-bold leading-tight"></p>
                 </div>
-                <button onclick="dismissPlantBanner()" class="bg-black/10 px-2 py-1 rounded font-black text-xs">HIDE</button>
+                <button onclick="dismissPlantBanner()" class="bg-black/10 px-2 py-1 rounded font-black text-xs text-black">HIDE</button>
             </div>
         </div>
 
@@ -125,7 +126,7 @@
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between text-black">
                 <div class="flex items-center space-x-4 overflow-hidden">
                     <div class="bg-yellow-400 p-3 rounded-2xl shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M248,112h-8V104a16,16,0,0,0-16-16h-4.2l-14.8-44.4A15.9,15.9,0,0,0,190,32H66a15.9,15.9,0,0,0-15,11.6L36.2,88H32a16,16,0,0,0-16,16v8H8a8,8,0,0,0,0,16H16v88a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM66,48H190l13.33,40H52.67ZM224,216H32V104H224V216ZM128,144a16,16,0,1,1-16,16A16,16,0,0,1,128,144Z"></path></svg></div>
-                    <div class="overflow-hidden"><p id="display-plant-name" class="font-black leading-none text-sm uppercase truncate">No Plant Selected</p><p id="display-sales-rep" class="text-slate-400 font-bold text-[10px] uppercase mt-1 tracking-wider truncate">No Sales Rep Set</p></div>
+                    <div class="overflow-hidden"><p id="display-plant-name" class="font-black leading-none text-sm uppercase truncate text-black">No Plant Selected</p><p id="display-sales-rep" class="text-slate-400 font-bold text-[10px] uppercase mt-1 tracking-wider truncate">No Sales Rep Set</p></div>
                 </div>
                 <a id="sales-rep-call-btn" href="tel:" class="bg-black text-yellow-400 p-3 rounded-2xl shadow-lg active:scale-90 transition-transform shrink-0 hidden text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>
             </div>
@@ -170,42 +171,42 @@
                     <p class="text-2xl font-black mt-2 text-slate-900" id="display-theoretical">0.0</p>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border p-4 flex flex-col justify-between transition-all duration-500" id="cutoff-card">
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-tight">Last Truck Out</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-tight text-black">Last Truck Out</p>
                     <span class="text-2xl font-black tabular-nums text-slate-900" id="display-cutoff-time">--:--</span>
                     <p id="display-countdown" class="text-[10px] text-slate-500 font-black uppercase mt-1 leading-none tracking-tighter italic truncate">Calculating...</p>
                 </div>
             </div>
 
-            <!-- Yield guard SF Input -->
-            <div class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 p-5 text-black">
+            <!-- Yield guard detail -->
+            <div class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 p-5 text-black" id="yield-card-main">
                 <h3 class="font-bold text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-4">Yield Parameters</h3>
                 <div>
                     <label class="block text-[10px] uppercase font-black text-slate-400 mb-1">SQ FT Paved To-Date</label>
-                    <input type="number" id="input-sf" placeholder="Enter SF" oninput="calculateYield()" class="w-full bg-slate-50 border-slate-200 border-2 p-3 rounded-xl text-2xl font-black">
+                    <input type="number" id="input-sf" placeholder="Enter SF" oninput="calculateYield()" class="w-full bg-slate-50 border-slate-200 border-2 p-3 rounded-xl text-2xl font-black text-black">
                 </div>
             </div>
 
             <!-- Material History -->
             <div class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 overflow-hidden ring-4 ring-slate-100">
                 <div class="bg-slate-900 p-4 border-b-4 border-yellow-400 flex justify-between items-center text-white">
-                    <h3 class="font-black text-xl uppercase tracking-tighter italic">Detailed History</h3>
-                    <button onclick="clearHistory()" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase">Clear</button>
+                    <h3 class="font-black text-xl uppercase tracking-tighter italic text-white">Detailed History</h3>
+                    <button onclick="clearHistory()" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-sm">Clear Log</button>
                 </div>
                 <div class="bg-slate-50 p-5 border-b-2 border-slate-200 shadow-inner">
                     <div class="grid grid-cols-2 gap-3 mb-4 text-black">
-                        <input type="number" id="new-load-tons" placeholder="Net Tons" step="0.01" class="w-full border-2 border-slate-200 p-3 rounded-xl text-xl font-black bg-white">
-                        <select id="new-load-truck" class="w-full border-2 border-slate-200 p-3 rounded-xl text-sm font-bold bg-white h-[52px]"></select>
+                        <input type="number" id="new-load-tons" placeholder="Net Tons" step="0.01" class="w-full border-2 border-slate-200 p-3 rounded-xl text-xl font-black bg-white text-black">
+                        <select id="new-load-truck" class="w-full border-2 border-slate-200 p-3 rounded-xl text-sm font-bold bg-white h-[52px] text-black"></select>
                     </div>
                     <div class="grid grid-cols-2 gap-2 text-black">
-                        <button onclick="triggerScanner()" class="flex items-center justify-center space-x-2 bg-black text-yellow-400 py-3 rounded-xl font-black uppercase text-xs active:scale-95 transition-transform border border-yellow-400/20">
+                        <button onclick="triggerScanner()" class="flex items-center justify-center space-x-2 bg-black text-yellow-400 py-3 rounded-xl font-black uppercase text-xs active:scale-95 transition-transform text-yellow-400 border border-yellow-400/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.72,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,1,1,8-8H80a8,8,0,0,0,6.65-3.56L100.28,48h55.44l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"></path></svg>
                             <span>Scan Ticket</span>
                         </button>
-                        <button onclick="addLoad()" class="bg-yellow-400 text-black py-3 rounded-xl font-black uppercase text-xs shadow-md">Add Manual</button>
+                        <button onclick="addLoad()" class="bg-yellow-400 text-black py-3 rounded-xl font-black uppercase text-xs active:scale-95 transition-transform shadow-md text-black">Add Manual</button>
                     </div>
                     <input type="file" id="ticket-file" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
                 </div>
-                <div id="load-list" class="divide-y divide-slate-100 max-h-[400px] overflow-y-auto bg-white text-black"></div>
+                <div id="load-list" class="divide-y divide-slate-100 max-h-[450px] overflow-y-auto bg-white text-black"></div>
             </div>
         </main>
 
@@ -215,10 +216,10 @@
                 <h3 class="font-black text-xs text-slate-400 mb-3 text-center uppercase tracking-widest">Unit Registration</h3>
                 <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-2 text-black">
-                        <input type="text" id="fleet-id" placeholder="Unit #" class="border-2 p-3 rounded-xl font-bold bg-slate-50 uppercase">
-                        <input type="text" id="fleet-driver" placeholder="Driver" class="border-2 p-3 rounded-xl font-bold bg-slate-50">
+                        <input type="text" id="fleet-id" placeholder="Unit #" class="border-2 p-3 rounded-xl font-bold bg-slate-50 uppercase text-black">
+                        <input type="text" id="fleet-driver" placeholder="Driver" class="border-2 p-3 rounded-xl font-bold bg-slate-50 text-black text-black">
                     </div>
-                    <input type="tel" id="fleet-phone" placeholder="Cell Number" class="w-full border-2 p-3 rounded-xl font-bold bg-slate-50">
+                    <input type="tel" id="fleet-phone" placeholder="Cell Number" class="w-full border-2 p-3 rounded-xl font-bold bg-slate-50 text-black">
                     <button onclick="addTruck()" class="w-full bg-black text-yellow-400 py-3 rounded-xl font-black uppercase shadow-lg border border-yellow-400/20 text-yellow-400">Add Unit</button>
                 </div>
             </div>
@@ -227,39 +228,49 @@
 
         <!-- CONFIG TAB -->
         <main id="view-settings" class="hidden p-4 space-y-4 text-black">
-            <div class="bg-white rounded-2xl shadow-sm border p-6">
+            <div class="bg-white rounded-2xl shadow-sm border p-6 text-black">
                 <h2 class="text-sm font-black uppercase text-slate-500 mb-6 tracking-widest text-center border-b pb-2">Project Configuration</h2>
                 <div class="space-y-4">
                     <div class="space-y-1">
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Project Details</label>
-                        <input type="text" id="setup-job-po" placeholder="Job/PO #" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2">
+                        <input type="text" id="setup-job-po" placeholder="Job/PO #" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2 text-black">
                         <div class="flex space-x-1">
-                            <input type="text" id="setup-job-address" placeholder="Job Street Address" class="flex-1 border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
-                            <button onclick="findClosestPlant()" id="plant-search-btn" class="bg-black text-yellow-400 px-4 rounded-xl font-bold border border-yellow-400/20 active:bg-yellow-400 active:text-black shadow-md text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></button>
+                            <input type="text" id="setup-job-address" placeholder="Job Street Address" class="flex-1 border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold text-black">
+                            <button onclick="findClosestPlant()" id="plant-search-btn" class="bg-black text-yellow-400 px-4 rounded-xl font-bold border border-yellow-400/20 active:bg-yellow-400 active:text-black shadow-md text-yellow-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100">
+                    <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 text-black">
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Paving Requirements</label>
                         <div class="grid grid-cols-2 gap-3 mb-3">
-                            <input type="number" id="setup-total-tons" placeholder="Tons Goal" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
-                            <input type="number" id="setup-depth" placeholder="Depth (In)" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
+                            <input type="number" id="setup-total-tons" placeholder="Tons Goal" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold text-black">
+                            <input type="number" id="setup-depth" placeholder="Depth (In)" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold text-black">
                         </div>
-                        <input type="number" id="setup-job-sf" placeholder="Est. SQ FT" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
+                        <input type="number" id="setup-job-sf" placeholder="Est. SQ FT" oninput="autoCalculateTonsAndLoads()" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold text-black">
+                        <input type="number" id="setup-planned-loads" placeholder="Planned Loads" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold text-black mt-3">
                     </div>
 
-                    <div class="space-y-1">
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Hotplant Selection</label>
+                    <div class="space-y-1 text-black">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Hotplant Details</label>
                         <select id="setup-plant-name" onchange="window.handlePlantSelect(this.value)" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold mb-2 text-black"></select>
-                        <input type="text" id="setup-plant-address" placeholder="Facility Address" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2">
+                        <input type="text" id="setup-plant-address" placeholder="Facility Address" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2 text-black text-black">
                         <div class="grid grid-cols-2 gap-2 text-black">
-                            <input type="text" id="setup-sales-rep" placeholder="Sales Rep" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
-                            <input type="tel" id="setup-sales-phone" placeholder="Rep Phone" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
+                            <input type="text" id="setup-sales-rep" placeholder="Sales Rep" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold text-black">
+                            <input type="tel" id="setup-sales-phone" placeholder="Rep Phone" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold text-black">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-3">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Plant Close</label>
+                            <input type="time" id="setup-plant-close" value="15:30" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold text-black">
                         </div>
                     </div>
 
                     <div class="pt-6 border-t border-slate-100 text-center">
-                        <button onclick="handleSignOut()" class="w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:bg-red-50 hover:text-red-500 transition-all">Sign Out Account</button>
+                        <button onclick="handleSignOut()" class="w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:bg-red-50 hover:text-red-500 transition-all text-black">Sign Out Account</button>
                     </div>
 
                     <button onclick="saveSetup()" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg border border-yellow-400/30 mt-4 active:scale-95 transition-transform text-yellow-400">Save Project Parameters</button>
@@ -269,11 +280,11 @@
     </div>
 
     <!-- BOTTOM NAVIGATION -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden text-white">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Dashboard</span></button>
-        <button onclick="switchTab('fleet')" id="nav-fleet" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Fleet</span></button>
-        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52-.75,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,4.71,7.14l2.48,23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Config</span></button>
-        <button onclick="generateReport()" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Report</span></button>
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden text-white text-white">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg><span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-[#facc15]">Dashboard</span></button>
+        <button onclick="switchTab('fleet')" id="nav-fleet" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg><span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Fleet</span></button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52-.75,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,4.71,7.14l2.48,23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg><span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Config</span></button>
+        <button onclick="generateReport()" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg><span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Report</span></button>
     </nav>
 
     <!-- MODULE SCRIPT -->
@@ -282,7 +293,6 @@
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- DATABASE ---
         const PLANT_DB = [
             { lng: -118.4033884, lat: 37.41938687, name: "Granite: Bishop Facility", rep: "Angela McAbee", phone: "(661) 331-3215", addr: "5 Bridges Road, Bishop, CA. 93514" },
             { lng: -121.880199, lat: 37.57599303, name: "Martin Marietta: Sunol", rep: "Mark Weiler", phone: "(925) 519-6828", addr: "7999 Athenour Way, Sunol CA 94586" },
@@ -321,7 +331,7 @@
         let confirmationResult = null;
         window.state = { jobPo: "", jobAddress: "", jobSf: 0, plantName: "No Plant Selected", plantAddress: "", salesRep: "Unassigned", salesRepPhone: "", totalGoal: 0, plannedLoads: 0, inches: 0, plantClosing: "15:30", travelTimeForward: 0, travelTimeReturn: 0, baselineForward: 0, baselineReturn: 0, loads: [], fleet: [], activeTab: "dashboard", plantBannerDismissed: false };
 
-        // --- AUTH LOGIC ---
+        // --- AUTH METHODS ---
         window.toggleAuthMethod = () => {
             const emailSec = document.getElementById('auth-email-section');
             const phoneSec = document.getElementById('auth-phone-section');
@@ -360,7 +370,7 @@
                     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
                     confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
                     document.getElementById('otp-container').classList.remove('hidden');
-                    actionBtn.innerText = "Verify SMS Code";
+                    actionBtn.innerText = "Verify Code";
                     window.showToast("SMS Code Sent");
                 } catch (e) { console.error(e); window.showToast("SMS failed. Check format: +1..."); }
             } else {
@@ -372,7 +382,7 @@
 
         window.handleSignOut = async () => { await signOut(auth); location.reload(); };
 
-        // --- CORE STARTUP ---
+        // --- STARTUP ---
         window.addEventListener('DOMContentLoaded', () => {
             onAuthStateChanged(auth, (u) => {
                 user = u;
@@ -406,7 +416,7 @@
             try { await setDoc(docRef, window.state, { merge: true }); } catch (e) { console.error("Save Error", e); }
         };
 
-        // --- LOGIC RESTORATION ---
+        // --- CORE LOGIC RESTORATION ---
         window.updateUI = () => {
             const s = window.state;
             const received = (s.loads || []).reduce((sum, l) => sum + l.tons, 0);
@@ -444,6 +454,7 @@
                 setVal('setup-depth', s.inches);
                 setVal('setup-job-po', s.jobPo);
                 setVal('setup-job-sf', s.jobSf);
+                setVal('setup-planned-loads', s.plannedLoads);
                 const pN = document.getElementById('setup-plant-name');
                 if(pN) pN.innerHTML = '<option value="">Select Facility</option>' + PLANT_DB.map(p => `<option value="${p.name}" ${s.plantName === p.name ? 'selected' : ''}>${p.name}</option>`).join('');
             }
@@ -463,7 +474,12 @@
             if(s.activeTab === 'fleet') window.renderFleet();
         };
 
-        window.switchTab = (tab) => { window.state.activeTab = tab; window.updateUI(); };
+        window.switchTab = (tab) => { 
+            window.state.activeTab = tab; 
+            document.getElementById('report-view').classList.add('hidden');
+            document.getElementById('main-app-container').classList.remove('hidden');
+            window.updateUI(); 
+        };
 
         window.renderHistory = () => {
             const list = document.getElementById('load-list'); if(!list) return;
@@ -471,15 +487,16 @@
                 <div class="p-4 flex justify-between items-center hover:bg-yellow-50 transition border-l-4 border-transparent hover:border-yellow-400 bg-white">
                     <div class="text-black">
                         <div class="flex items-center space-x-2"><span class="text-[10px] font-black bg-slate-900 text-yellow-400 px-2 py-0.5 rounded italic">Load #${window.state.loads.length - i}</span><span class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-slate-400">Unit ${l.truckId}</span></div>
-                        <p class="font-black text-2xl mt-2 text-black">${l.tons.toFixed(2)} <span class="text-sm text-slate-400 font-bold uppercase italic">tons</span></p>
+                        <p class="font-black text-2xl mt-2 text-black">${l.tons.toFixed(2)} <span class="text-sm text-slate-400 font-bold uppercase italic text-black">tons</span></p>
                     </div>
-                    <div class="flex flex-col items-end space-y-2"><span class="text-[10px] font-black text-slate-500 bg-slate-200 px-2 py-1 rounded-md border border-slate-300 shadow-sm">${l.time}</span><button onclick="removeLoad(${l.id})" class="text-slate-300 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button></div>
+                    <div class="flex flex-col items-end space-y-2 text-black"><span class="text-[10px] font-black text-slate-500 bg-slate-200 px-2 py-1 rounded-md border border-slate-300 shadow-sm">${l.time}</span><button onclick="removeLoad(${l.id})" class="text-slate-300 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button></div>
                 </div>`).join('') || '<div class="p-12 text-center text-slate-400 italic text-sm font-medium">No loads recorded.</div>';
         };
 
         window.calculateYield = () => {
             const sf = parseFloat(document.getElementById('input-sf')?.value) || 0;
-            const theo = (sf / 159) * (parseFloat(window.state.inches) || 0);
+            const inches = parseFloat(window.state.inches) || 0;
+            const theo = (sf / 159) * inches;
             const rec = window.state.loads.reduce((sum, l) => sum + l.tons, 0);
             const el = document.getElementById('display-theoretical'); if(el) el.innerText = theo.toFixed(1);
             const badge = document.getElementById('yield-badge'); if(!badge) return;
@@ -501,31 +518,33 @@
             const cardEl = document.getElementById('cutoff-card');
             if(ctEl) ctEl.innerText = cutoffDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             if(cdEl && cardEl) {
-                if(diffMins < 0) { cdEl.innerText = "CUTOFF EXCEEDED"; cardEl.classList.add('pulse-border'); } 
-                else { cdEl.innerText = `Exit site in ${diffMins}m`; cardEl.classList.remove('pulse-border'); }
+                if(diffMins < 0) {
+                    cdEl.innerText = "CUTOFF EXCEEDED"; cardEl.classList.add('pulse-border');
+                } else {
+                    cdEl.innerText = `Exit site in ${diffMins}m`; cardEl.classList.remove('pulse-border');
+                }
             }
         };
 
-        // --- FLEET SYSTEM RESTORATION ---
+        // --- FLEET SYSTEM ---
         window.addTruck = () => {
             const id = document.getElementById('fleet-id')?.value.trim().toUpperCase(); if (!id) return window.showToast("ID Required");
             window.state.fleet.push({ id, driver: document.getElementById('fleet-driver')?.value.trim(), phone: document.getElementById('fleet-phone')?.value.trim() });
             document.getElementById('fleet-id').value = ''; document.getElementById('fleet-driver').value = ''; document.getElementById('fleet-phone').value = '';
             window.saveToCloud(); window.updateUI(); window.showToast("Unit Added");
         };
-
         window.renderFleet = () => {
             const list = document.getElementById('fleet-list'); if(!list) return;
             const truckSelect = document.getElementById('new-load-truck');
             if(truckSelect) truckSelect.innerHTML = '<option value="Manual">Unit #</option>' + (window.state.fleet || []).map(t => `<option value="${t.id}">${t.id}</option>`).join('');
             list.innerHTML = (window.state.fleet || []).map((t, idx) => `
                 <div class="bg-white p-4 rounded-xl border-l-4 border-yellow-400 shadow-sm flex justify-between items-center text-black">
-                    <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 opacity-30">Unit #</p><p class="font-black text-xl">${t.id}</p><p class="text-xs text-slate-500 font-bold">${t.driver || 'No Driver'}</p></div>
+                    <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 opacity-30">Unit #</p><p class="font-black text-xl text-black">${t.id}</p><p class="text-xs text-slate-500 font-bold">${t.driver || 'No Driver'}</p></div>
                     <div class="flex items-center space-x-2">
-                        ${t.phone ? `<a href="tel:${t.phone.replace(/[^0-9]/g, '')}" class="bg-black text-yellow-400 p-2 rounded-full shadow-lg active:bg-yellow-400 active:text-black"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>` : ''}
+                        ${t.phone ? `<a href="tel:${t.phone.replace(/[^0-9]/g, '')}" class="bg-black text-yellow-400 p-2 rounded-full shadow-lg active:bg-yellow-400 active:text-black text-yellow-400 text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>` : ''}
                         <button onclick="removeTruck('${t.id}')" class="text-slate-200 p-2 hover:text-red-500 font-bold text-black">X</button>
                     </div>
-                </div>`).join('') || '<p class="p-8 text-center text-slate-400 italic font-bold text-black">Add units or scan a ticket.</p>';
+                </div>`).join('') || '<p class="p-8 text-center text-slate-400 font-bold text-black">Add units or scan a ticket.</p>';
         };
         window.removeTruck = (id) => { if(confirm(`Remove truck ${id}?`)) { window.state.fleet = window.state.fleet.filter(t => t.id !== id); window.saveToCloud(); window.updateUI(); } };
 
@@ -592,12 +611,22 @@
             window.state.loads.unshift({ id: Date.now(), tons: t, truckId: truckIn?.value || "Manual", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
             if(tonsIn) tonsIn.value = ''; window.saveToCloud(); window.showToast("Logged");
         };
+        window.autoCalculateTonsAndLoads = () => {
+            const sf = parseFloat(document.getElementById('setup-job-sf')?.value);
+            const depth = parseFloat(document.getElementById('setup-depth')?.value);
+            if (sf > 0 && depth > 0) {
+                const tons = (sf / 159) * depth;
+                const tonsEl = document.getElementById('setup-total-tons');
+                if(tonsEl) tonsEl.value = tons.toFixed(1);
+            }
+        };
         window.removeLoad = (id) => { window.state.loads = window.state.loads.filter(l => l.id !== id); window.saveToCloud(); };
         window.clearHistory = () => { if(confirm("Clear log?")) { window.state.loads = []; window.saveToCloud(); } };
         window.saveSetup = () => {
             const s = window.state;
             s.jobPo = document.getElementById('setup-job-po').value; s.jobAddress = document.getElementById('setup-job-address').value; s.jobSf = parseFloat(document.getElementById('setup-job-sf').value) || 0;
             s.totalGoal = parseFloat(document.getElementById('setup-total-tons')?.value) || 0; s.inches = parseFloat(document.getElementById('setup-depth')?.value) || 0;
+            s.plannedLoads = parseInt(document.getElementById('setup-planned-loads')?.value) || 0;
             s.plantName = document.getElementById('setup-plant-name').value; s.plantAddress = document.getElementById('setup-plant-address').value;
             s.salesRep = document.getElementById('setup-sales-rep').value; s.salesRepPhone = document.getElementById('setup-sales-phone').value;
             window.saveToCloud(); window.updateLiveTraffic(); window.switchTab('dashboard'); window.showToast("Settings Saved");
@@ -612,7 +641,7 @@
             document.getElementById('report-job-title').innerText = s.jobPo || "pavingPM DAILY REPORT";
             document.getElementById('report-received-val').innerText = s.loads.reduce((sum, l) => sum + l.tons, 0).toFixed(1) + " t";
             const rBody = document.getElementById('report-table-body');
-            if(rBody) rBody.innerHTML = s.loads.map((l, i) => `<tr><td class="p-4 border">${s.loads.length - i}</td><td class="p-4 border text-center font-bold">${l.time}</td><td class="p-4 border text-center uppercase">${l.truckId}</td><td class="p-4 border text-right">${l.tons.toFixed(2)}</td></tr>`).join('');
+            if(rBody) rBody.innerHTML = s.loads.map((l, i) => `<tr><td class="p-4 border">${s.loads.length - i}</td><td class="p-4 border text-center font-bold text-black">${l.time}</td><td class="p-4 border text-center uppercase text-black">${l.truckId}</td><td class="p-4 border text-right text-black">${l.tons.toFixed(2)}</td></tr>`).join('');
             document.getElementById('main-app-container').classList.add('hidden');
             document.getElementById('report-view').classList.remove('hidden');
             window.scrollTo(0,0);
