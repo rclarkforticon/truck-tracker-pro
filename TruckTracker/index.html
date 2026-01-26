@@ -22,6 +22,7 @@
         .tab-active { color: #facc15 !important; }
         .tab-active svg { fill: #facc15 !important; }
         input:focus, select:focus { outline: none; border-color: #facc15; ring: 2px #facc15; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen font-medium">
@@ -34,31 +35,52 @@
                 <p class="text-[10px] text-slate-400 uppercase font-black tracking-[0.2em]">Logistics Management</p>
             </div>
             <div class="p-8 space-y-4">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-black uppercase text-slate-400 px-1">Email Address</label>
-                    <input type="email" id="auth-email" class="w-full border-2 border-slate-100 p-3 rounded-xl font-bold focus:border-yellow-400 transition-colors" placeholder="name@company.com">
+                
+                <!-- Email Auth Section -->
+                <div id="auth-email-section" class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 px-1">Email Address</label>
+                        <input type="email" id="auth-email" class="w-full border-2 border-slate-100 p-3 rounded-xl font-bold focus:border-yellow-400 transition-colors" placeholder="name@company.com">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 px-1">Password</label>
+                        <input type="password" id="auth-pass" class="w-full border-2 border-slate-100 p-3 rounded-xl font-bold focus:border-yellow-400 transition-colors" placeholder="••••••••">
+                    </div>
+                    <button onclick="handleAuth('login')" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">Sign In</button>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-[10px] font-black uppercase text-slate-400 px-1">Password</label>
-                    <input type="password" id="auth-pass" class="w-full border-2 border-slate-100 p-3 rounded-xl font-bold focus:border-yellow-400 transition-colors" placeholder="••••••••">
+
+                <!-- Phone Auth Section -->
+                <div id="auth-phone-section" class="hidden space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 px-1">Mobile Number</label>
+                        <input type="tel" id="auth-phone" class="w-full border-2 border-slate-100 p-3 rounded-xl font-bold focus:border-yellow-400 transition-colors" placeholder="+1 555-555-5555">
+                    </div>
+                    <div id="otp-container" class="hidden space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 px-1 text-yellow-600">Verification Code</label>
+                        <input type="text" id="auth-otp" class="w-full border-2 border-yellow-400 p-3 rounded-xl font-black text-center tracking-[0.5em] text-xl" placeholder="000000">
+                    </div>
+                    <div id="recaptcha-container"></div>
+                    <button id="phone-action-btn" onclick="handlePhoneAuth()" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">Send SMS Code</button>
                 </div>
                 
                 <div class="pt-2 flex flex-col space-y-3">
-                    <button onclick="handleAuth('login')" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg active:scale-95 transition-transform">Sign In</button>
-                    
-                    <div class="relative py-2">
+                    <div class="relative py-2 text-slate-400">
                         <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-                        <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 text-slate-400 font-bold">Or continue with</span></div>
+                        <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-2 font-bold">Other Options</span></div>
                     </div>
 
-                    <button onclick="handleGoogleAuth()" class="w-full bg-white border-2 border-slate-100 text-slate-700 py-3.5 rounded-2xl font-bold flex items-center justify-center space-x-3 shadow-sm active:scale-95 transition-transform hover:bg-slate-50">
-                        <svg width="20" height="20" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 24.1 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#4285F4"/><path d="m6.3 14.7 6.6 4.8C14.7 16.2 19.1 14 24 14c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 16.5 2 9.9 5.2 6.3 10.5l.04.04z" fill="#EA4335"/><path d="M24 46c5.9 0 10.9-2 15.1-5.4l-6.5-5.2c-2.3 1.5-5.3 2.6-8.6 2.6-6.1 0-11.2-4.1-13.1-9.6l-6.7 5.2C7.9 40.5 15.4 46 24 46z" fill="#34A853"/><path d="M10.9 29.4c-1.1-3.2-1.1-6.7 0-9.9l-6.7-5.2C1.4 18.2 1.4 29.8 4.2 34.6l6.7-5.2z" fill="#FBBC05"/>
-                        </svg>
-                        <span>Sign in with Google</span>
-                    </button>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="handleGoogleAuth()" class="bg-white border-2 border-slate-100 text-slate-700 py-3 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition-transform hover:bg-slate-50">
+                            <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#4285F4"/><path d="m6.3 14.7 6.6 4.8C14.7 16.2 19.1 14 24 14c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 16.5 2 9.9 5.2 6.3 10.5l.04.04z" fill="#EA4335"/><path d="M24 46c5.9 0 10.9-2 15.1-5.4l-6.5-5.2c-2.3 1.5-5.3 2.6-8.6 2.6-6.1 0-11.2-4.1-13.1-9.6l-6.7 5.2C7.9 40.5 15.4 46 24 46z" fill="#34A853"/><path d="M10.9 29.4c-1.1-3.2-1.1-6.7 0-9.9l-6.7-5.2C1.4 18.2 1.4 29.8 4.2 34.6l6.7-5.2z" fill="#FBBC05"/></svg>
+                            <span class="text-xs">Google</span>
+                        </button>
+                        <button onclick="toggleAuthMethod()" class="bg-white border-2 border-slate-100 text-slate-700 py-3 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition-transform hover:bg-slate-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M192,24H64A32,32,0,0,0,32,56V200a32,32,0,0,0,32,32H192a32,32,0,0,0,32-32V56A32,32,0,0,0,192,24Zm16,176a16,16,0,0,1-16,16H64a16,16,0,0,1-16-16V56A16,16,0,0,1,64,40H192a16,16,0,0,1,16,16V200ZM128,176a12,12,0,1,1-12,12A12,12,0,0,1,128,176Z"></path></svg>
+                            <span id="toggle-label" class="text-xs">Mobile</span>
+                        </button>
+                    </div>
 
-                    <button onclick="handleAuth('signup')" class="w-full text-slate-400 py-2 font-bold text-xs uppercase tracking-widest hover:text-black transition-colors text-center">Create Account with Email</button>
+                    <button id="create-account-btn" onclick="handleAuth('signup')" class="w-full text-slate-400 py-2 font-bold text-[10px] uppercase tracking-widest hover:text-black transition-colors text-center">Create Account with Email</button>
                 </div>
             </div>
         </div>
@@ -69,21 +91,22 @@
         <header class="bg-black text-white p-4 sticky top-0 z-50 shadow-lg border-b border-yellow-400/30 text-center">
             <div class="flex justify-between items-center text-white">
                 <div class="flex-1">
-                    <h1 class="text-xl font-black tracking-tighter italic text-yellow-400 uppercase leading-none" style="filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">pavingPM</h1>
+                    <h1 class="text-xl font-black tracking-tighter italic text-yellow-400 uppercase leading-none">pavingPM</h1>
                     <p id="header-job-name" class="text-[10px] text-slate-400 uppercase font-black tracking-[0.15em] mt-1 truncate max-w-[250px] mx-auto"></p>
                 </div>
             </div>
         </header>
 
+        <!-- Emergency Traffic Banner -->
         <div id="traffic-delay-banner" class="hidden emergency-banner text-white p-3 flex items-center justify-between shadow-lg">
             <div class="flex items-center space-x-3 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 256 256" class="animate-bounce"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.34,24.34,0,0,0,40.55,224h174.9a24.34,24.34,0,0,0,21.35-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path></svg>
                 <div>
-                    <p class="text-xs font-black uppercase tracking-tighter mb-1">SIGNIFICANT DELAY</p>
+                    <p class="text-xs font-black uppercase tracking-tighter leading-none mb-1">TRAFFIC ALERT</p>
                     <p id="traffic-delay-text" class="text-[10px] font-bold opacity-90"></p>
                 </div>
             </div>
-            <button onclick="document.getElementById('traffic-delay-banner').classList.add('hidden')" class="font-bold text-white">X</button>
+            <button onclick="document.getElementById('traffic-delay-banner').classList.add('hidden')" class="bg-black/20 p-1 rounded font-bold text-white">X</button>
         </div>
 
         <div id="plant-close-banner" class="hidden warning-banner bg-yellow-400 text-black p-3 flex items-center shadow-lg border-b border-yellow-600/20 text-black">
@@ -97,130 +120,106 @@
             </div>
         </div>
 
+        <!-- DASHBOARD TAB -->
         <main id="view-dashboard" class="p-4 space-y-6">
-            <!-- Plant Widget -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between text-black">
                 <div class="flex items-center space-x-4 overflow-hidden">
-                    <div class="bg-yellow-400 p-3 rounded-2xl text-black shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M248,112h-8V104a16,16,0,0,0-16-16h-4.2l-14.8-44.4A15.9,15.9,0,0,0,190,32H66a15.9,15.9,0,0,0-15,11.6L36.2,88H32a16,16,0,0,0-16,16v8H8a8,8,0,0,0,0,16H16v88a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM66,48H190l13.33,40H52.67ZM224,216H32V104H224V216ZM128,144a16,16,0,1,1-16,16A16,16,0,0,1,128,144Z"></path></svg>
-                    </div>
-                    <div class="overflow-hidden">
-                        <p id="display-plant-name" class="font-black leading-none text-sm uppercase truncate">No Plant Selected</p>
-                        <p id="display-sales-rep" class="text-slate-400 font-bold text-[10px] uppercase mt-1 tracking-wider truncate">No Sales Rep Set</p>
-                    </div>
+                    <div class="bg-yellow-400 p-3 rounded-2xl shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M248,112h-8V104a16,16,0,0,0-16-16h-4.2l-14.8-44.4A15.9,15.9,0,0,0,190,32H66a15.9,15.9,0,0,0-15,11.6L36.2,88H32a16,16,0,0,0-16,16v8H8a8,8,0,0,0,0,16H16v88a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM66,48H190l13.33,40H52.67ZM224,216H32V104H224V216ZM128,144a16,16,0,1,1-16,16A16,16,0,0,1,128,144Z"></path></svg></div>
+                    <div class="overflow-hidden"><p id="display-plant-name" class="font-black leading-none text-sm uppercase truncate">No Plant Selected</p><p id="display-sales-rep" class="text-slate-400 font-bold text-[10px] uppercase mt-1 tracking-wider truncate">No Sales Rep Set</p></div>
                 </div>
-                <a id="sales-rep-call-btn" href="tel:" class="bg-black text-yellow-400 p-3 rounded-2xl shadow-lg active:scale-90 transition-transform shrink-0 hidden text-yellow-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg>
-                </a>
+                <a id="sales-rep-call-btn" href="tel:" class="bg-black text-yellow-400 p-3 rounded-2xl shadow-lg active:scale-90 transition-transform shrink-0 hidden text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>
             </div>
 
             <!-- Cycle Times Widget -->
             <div id="travel-widget" class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 overflow-hidden ring-4 ring-slate-100 transition-all duration-500">
                 <div class="bg-slate-900 px-4 py-2 border-b-4 border-yellow-400 flex justify-between items-center text-white">
-                    <div>
-                        <h3 class="font-black text-xs uppercase tracking-tighter italic">Truck Cycle Times</h3>
-                        <p class="text-[8px] text-yellow-400/70 font-black uppercase tracking-widest leading-none">Super10 Dynamics</p>
-                    </div>
-                    <button onclick="updateLiveTraffic()" class="bg-yellow-400 text-black px-2 py-1 rounded text-[9px] font-black uppercase shadow-sm active:scale-95 transition-transform">Refresh</button>
+                    <div><h3 class="font-black text-xs uppercase tracking-tighter italic">Truck Cycle Times</h3><p class="text-[8px] text-yellow-400/70 font-black uppercase tracking-widest leading-none">Super10 Dynamics</p></div>
+                    <button onclick="updateLiveTraffic()" class="bg-yellow-400 text-black px-2 py-1 rounded text-[9px] font-black uppercase shadow-sm active:scale-95 transition-transform text-black">Refresh</button>
                 </div>
                 <div class="p-4 grid grid-cols-2 gap-3 bg-slate-50/50 text-black">
                     <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-center">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Hotplant → Jobsite</p>
-                        <p id="travel-forward" class="text-3xl font-black tabular-nums">-- <span class="text-xs text-slate-400">m</span></p>
+                        <p id="travel-forward" class="text-3xl font-black tabular-nums">-- <span class="text-xs text-slate-400 font-bold uppercase">m</span></p>
                     </div>
                     <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-center">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Jobsite → Hotplant</p>
-                        <p id="travel-return" class="text-3xl font-black tabular-nums">-- <span class="text-xs text-slate-400">m</span></p>
+                        <p id="travel-return" class="text-3xl font-black tabular-nums">-- <span class="text-xs text-slate-400 font-bold uppercase">m</span></p>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Tally -->
+            <!-- Main Tally Card -->
             <div class="bg-black text-white rounded-2xl shadow-2xl p-6 relative overflow-hidden border-b-4 border-yellow-400">
                 <div class="relative z-10 text-white">
                     <div class="flex justify-between items-end mb-4">
-                        <div>
-                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-yellow-400 mb-1 opacity-60">Tons Received</p>
-                            <h2 class="text-7xl font-black tabular-nums tracking-tighter leading-none text-yellow-400" id="display-received">0.0</h2>
-                        </div>
-                        <div class="text-right pb-1">
-                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-1 leading-none">Truck Count</p>
-                            <h2 class="text-2xl font-black opacity-40 text-white"><span id="display-loads-count">0</span><span class="text-sm mx-0.5">/</span><span id="display-loads-goal">--</span></h2>
-                        </div>
+                        <div><p class="text-[10px] font-black uppercase tracking-[0.2em] text-yellow-400 mb-1 opacity-60">Tons Received</p><h2 class="text-7xl font-black tabular-nums tracking-tighter leading-none text-yellow-400" id="display-received">0.0</h2></div>
+                        <div class="text-right pb-1 text-white"><p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-1 leading-none">Loads</p><h2 class="text-2xl font-black opacity-40 text-white"><span id="display-loads-count">0</span><span class="text-sm mx-0.5">/</span><span id="display-loads-goal">--</span></h2></div>
                     </div>
                     <div class="w-full bg-slate-900 h-4 rounded-full overflow-hidden mb-3 border border-slate-800 text-white">
                         <div id="progress-bar" class="progress-bar bg-yellow-400 h-full" style="width: 0%"></div>
                     </div>
-                    <div class="flex justify-between text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                        <span>Goal Completion</span>
-                        <span>Remaining: <span id="display-remaining" class="text-yellow-400">0</span> t</span>
-                    </div>
+                    <div class="flex justify-between text-[10px] font-black text-slate-500 uppercase tracking-widest"><span>Goal Completion</span><span>Remaining: <span id="display-remaining" class="text-yellow-400">0</span> t</span></div>
                 </div>
             </div>
 
-            <!-- Yield Guard -->
-            <div class="bg-black text-white rounded-2xl shadow-xl p-5 border-2 border-transparent transition-all duration-500 text-white" id="yield-card">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-xs uppercase tracking-[0.2em] text-slate-500">Yield Guard</h3>
-                    <div id="yield-badge" class="px-2 py-1 rounded text-[10px] font-black uppercase bg-slate-800 text-yellow-400 border border-yellow-400/20">Ready</div>
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-2 gap-3 text-black">
+                <div class="bg-white rounded-xl shadow-sm border p-4 flex flex-col justify-between" id="yield-summary">
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-tight">Yield Guard</p>
+                    <div id="yield-badge" class="mt-1 px-2 py-0.5 rounded text-[10px] font-black uppercase inline-block bg-slate-100 text-slate-400 w-fit">Ready</div>
+                    <p class="text-2xl font-black mt-2 text-slate-900" id="display-theoretical">0.0</p>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-[10px] uppercase font-black opacity-40 mb-1 text-white">SQ FT Paved</label>
-                        <input type="number" id="input-sf" placeholder="Enter SF" oninput="calculateYield()" class="w-full bg-slate-900 border-slate-800 border p-3 rounded-xl text-2xl font-black text-yellow-400 focus:ring-2 focus:ring-yellow-400">
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <p class="text-[10px] uppercase font-black opacity-40 mb-1 leading-none mb-1 text-slate-400">Theo. Needed</p>
-                        <p class="text-3xl font-black text-yellow-400" id="display-theoretical">0.0</p>
-                    </div>
+                <div class="bg-white rounded-xl shadow-sm border p-4 flex flex-col justify-between transition-all duration-500" id="cutoff-card">
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-tight">Last Truck Out</p>
+                    <span class="text-2xl font-black tabular-nums text-slate-900" id="display-cutoff-time">--:--</span>
+                    <p id="display-countdown" class="text-[10px] text-slate-500 font-black uppercase mt-1 leading-none tracking-tighter italic truncate">Calculating...</p>
                 </div>
             </div>
 
-            <!-- History Section -->
+            <!-- Yield guard SF Input -->
+            <div class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 p-5 text-black">
+                <h3 class="font-bold text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-4">Yield Parameters</h3>
+                <div>
+                    <label class="block text-[10px] uppercase font-black text-slate-400 mb-1">SQ FT Paved To-Date</label>
+                    <input type="number" id="input-sf" placeholder="Enter SF" oninput="calculateYield()" class="w-full bg-slate-50 border-slate-200 border-2 p-3 rounded-xl text-2xl font-black">
+                </div>
+            </div>
+
+            <!-- Material History -->
             <div class="bg-white rounded-2xl shadow-xl border-2 border-slate-200 overflow-hidden ring-4 ring-slate-100">
-                <div class="bg-slate-900 p-4 border-b-4 border-yellow-400 flex justify-between items-center text-white text-white">
-                    <div>
-                        <h3 class="font-black text-xl uppercase tracking-tighter italic text-white">Detailed History</h3>
-                        <p class="text-[9px] text-yellow-400/70 font-black uppercase tracking-widest leading-none mt-1">Live Material Log</p>
-                    </div>
-                    <button onclick="clearHistory()" class="bg-red-600 text-white hover:bg-red-700 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-sm">Clear Log</button>
+                <div class="bg-slate-900 p-4 border-b-4 border-yellow-400 flex justify-between items-center text-white">
+                    <h3 class="font-black text-xl uppercase tracking-tighter italic">Detailed History</h3>
+                    <button onclick="clearHistory()" class="bg-red-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase">Clear</button>
                 </div>
                 <div class="bg-slate-50 p-5 border-b-2 border-slate-200 shadow-inner">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 text-center">New Arrival Intake</p>
-                    <div class="space-y-4 text-black">
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase px-1">Net Tonnage</label>
-                                <input type="number" id="new-load-tons" placeholder="0.00" step="0.01" class="w-full border-2 border-slate-200 p-3 rounded-xl text-xl font-black bg-white focus:border-yellow-400 text-black">
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[9px] font-black text-slate-400 uppercase px-1">Assign Truck</label>
-                                <select id="new-load-truck" class="w-full border-2 border-slate-200 p-3 rounded-xl text-sm font-bold bg-white focus:border-yellow-400 text-black h-[52px]"></select>
-                            </div>
-                        </div>
-                        <button onclick="triggerScanner()" id="scanner-btn" class="w-full flex items-center justify-center space-x-3 bg-black text-yellow-400 py-4 rounded-xl font-black uppercase tracking-widest shadow-lg border border-yellow-400/20 active:scale-95 transition-transform text-yellow-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 256 256"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.72,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,1,1,8-8H80a8,8,0,0,0,6.65-3.56L100.28,48h55.44l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"></path></svg>
-                            <span>Scan Weigh Ticket</span>
-                        </button>
-                        <button onclick="addLoad()" class="w-full bg-white border-2 border-slate-200 py-2.5 rounded-xl text-slate-500 font-black uppercase text-[10px] tracking-widest hover:bg-slate-100 text-center">Log Manual Entry</button>
-                        <input type="file" id="ticket-file" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
+                    <div class="grid grid-cols-2 gap-3 mb-4 text-black">
+                        <input type="number" id="new-load-tons" placeholder="Net Tons" step="0.01" class="w-full border-2 border-slate-200 p-3 rounded-xl text-xl font-black bg-white">
+                        <select id="new-load-truck" class="w-full border-2 border-slate-200 p-3 rounded-xl text-sm font-bold bg-white h-[52px]"></select>
                     </div>
+                    <div class="grid grid-cols-2 gap-2 text-black">
+                        <button onclick="triggerScanner()" class="flex items-center justify-center space-x-2 bg-black text-yellow-400 py-3 rounded-xl font-black uppercase text-xs active:scale-95 transition-transform border border-yellow-400/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.72,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,1,1,8-8H80a8,8,0,0,0,6.65-3.56L100.28,48h55.44l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"></path></svg>
+                            <span>Scan Ticket</span>
+                        </button>
+                        <button onclick="addLoad()" class="bg-yellow-400 text-black py-3 rounded-xl font-black uppercase text-xs shadow-md">Add Manual</button>
+                    </div>
+                    <input type="file" id="ticket-file" accept="image/*" capture="environment" class="hidden" onchange="handleImageUpload(event)">
                 </div>
-                <div id="load-list" class="divide-y divide-slate-100 max-h-[450px] overflow-y-auto bg-white text-black"></div>
+                <div id="load-list" class="divide-y divide-slate-100 max-h-[400px] overflow-y-auto bg-white text-black"></div>
             </div>
         </main>
 
         <!-- FLEET TAB -->
-        <main id="view-fleet" class="hidden p-4 space-y-4">
-            <div class="bg-white rounded-2xl shadow-sm border p-4 text-black">
-                <h3 class="font-black text-xs text-slate-400 mb-3 text-center uppercase tracking-widest text-black">Unit Registration</h3>
+        <main id="view-fleet" class="hidden p-4 space-y-4 text-black">
+            <div class="bg-white rounded-2xl shadow-sm border p-4">
+                <h3 class="font-black text-xs text-slate-400 mb-3 text-center uppercase tracking-widest">Unit Registration</h3>
                 <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-2 text-black">
-                        <input type="text" id="fleet-id" placeholder="Unit #" class="border p-3 rounded-xl font-bold bg-slate-50 uppercase text-black">
-                        <input type="text" id="fleet-driver" placeholder="Driver" class="border p-3 rounded-xl font-bold bg-slate-50 text-black">
+                        <input type="text" id="fleet-id" placeholder="Unit #" class="border-2 p-3 rounded-xl font-bold bg-slate-50 uppercase">
+                        <input type="text" id="fleet-driver" placeholder="Driver" class="border-2 p-3 rounded-xl font-bold bg-slate-50">
                     </div>
-                    <input type="tel" id="fleet-phone" placeholder="Cell Number" class="w-full border p-3 rounded-xl font-bold bg-slate-50 text-black">
-                    <button onclick="addTruck()" class="w-full bg-black text-yellow-400 py-3 rounded-xl font-black uppercase shadow-lg border border-yellow-400/20 text-yellow-400">Add Truck</button>
+                    <input type="tel" id="fleet-phone" placeholder="Cell Number" class="w-full border-2 p-3 rounded-xl font-bold bg-slate-50">
+                    <button onclick="addTruck()" class="w-full bg-black text-yellow-400 py-3 rounded-xl font-black uppercase shadow-lg border border-yellow-400/20 text-yellow-400">Add Unit</button>
                 </div>
             </div>
             <div id="fleet-list" class="space-y-3 pb-8 text-black"></div>
@@ -228,133 +227,62 @@
 
         <!-- CONFIG TAB -->
         <main id="view-settings" class="hidden p-4 space-y-4 text-black">
-            <div class="bg-white rounded-2xl shadow-sm border p-6 text-black">
-                <h2 class="text-sm font-black uppercase text-slate-500 mb-6 tracking-widest text-center border-b pb-2 text-black">Project Configuration</h2>
+            <div class="bg-white rounded-2xl shadow-sm border p-6">
+                <h2 class="text-sm font-black uppercase text-slate-500 mb-6 tracking-widest text-center border-b pb-2">Project Configuration</h2>
                 <div class="space-y-4">
                     <div class="space-y-1">
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Project Details</label>
-                        <input type="text" id="setup-job-po" placeholder="Job/PO #" class="w-full border p-3 rounded-xl bg-slate-50 font-bold mb-2 text-black">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Project Details</label>
+                        <input type="text" id="setup-job-po" placeholder="Job/PO #" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2">
                         <div class="flex space-x-1">
-                            <input type="text" id="setup-job-address" placeholder="Job Street Address" class="flex-1 border p-3 rounded-xl bg-slate-50 font-bold text-black">
-                            <button onclick="findClosestPlant()" id="plant-search-btn" class="bg-black text-yellow-400 px-4 rounded-xl font-bold border border-yellow-400/20 active:bg-yellow-400 active:text-black shadow-md text-yellow-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
-                            </button>
+                            <input type="text" id="setup-job-address" placeholder="Job Street Address" class="flex-1 border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
+                            <button onclick="findClosestPlant()" id="plant-search-btn" class="bg-black text-yellow-400 px-4 rounded-xl font-bold border border-yellow-400/20 active:bg-yellow-400 active:text-black shadow-md text-yellow-400"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg></button>
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 text-black">Paving Requirements</label>
-                        <div class="grid grid-cols-2 gap-3 mb-3 text-black">
-                            <div>
-                                <label class="block text-[9px] font-bold text-slate-400 uppercase">Est. SQ FT</label>
-                                <input type="number" id="setup-job-sf" placeholder="Enter SF" oninput="autoCalculateTonsAndLoads()" class="w-full border p-3 rounded-xl bg-white font-bold text-black">
-                            </div>
-                            <div>
-                                <label class="block text-[9px] font-bold text-slate-400 uppercase text-black">Mat Depth (IN)</label>
-                                <input type="number" id="setup-depth" placeholder="Depth" oninput="autoCalculateTonsAndLoads()" class="w-full border p-3 rounded-xl bg-white font-bold text-black">
-                            </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Paving Requirements</label>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <input type="number" id="setup-total-tons" placeholder="Tons Goal" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
+                            <input type="number" id="setup-depth" placeholder="Depth (In)" class="border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
                         </div>
-                        <div class="grid grid-cols-2 gap-3 text-black">
-                            <div>
-                                <label class="block text-[9px] font-bold text-slate-400 uppercase text-black">Tons Goal</label>
-                                <input type="number" id="setup-total-tons" placeholder="Tons" class="w-full border p-3 rounded-xl bg-white font-bold text-black">
-                            </div>
-                            <div>
-                                <label class="block text-[9px] font-bold text-slate-400 uppercase text-black">Planned Loads</label>
-                                <input type="number" id="setup-planned-loads" placeholder="Loads" class="w-full border p-3 rounded-xl bg-white font-bold text-black">
-                            </div>
+                        <input type="number" id="setup-job-sf" placeholder="Est. SQ FT" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Hotplant Selection</label>
+                        <select id="setup-plant-name" onchange="window.handlePlantSelect(this.value)" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-white font-bold mb-2 text-black"></select>
+                        <input type="text" id="setup-plant-address" placeholder="Facility Address" class="w-full border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold mb-2">
+                        <div class="grid grid-cols-2 gap-2 text-black">
+                            <input type="text" id="setup-sales-rep" placeholder="Sales Rep" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
+                            <input type="tel" id="setup-sales-phone" placeholder="Rep Phone" class="border-2 border-slate-100 p-3 rounded-xl bg-slate-50 font-bold">
                         </div>
                     </div>
 
-                    <div class="space-y-1 text-black">
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Hotplant Selection</label>
-                        <select id="setup-plant-name" onchange="window.handlePlantSelect(this.value)" class="w-full border p-3 rounded-xl bg-white font-bold mb-2 text-black text-black"></select>
-                        <input type="text" id="setup-plant-address" placeholder="Facility Address" class="w-full border p-3 rounded-xl bg-slate-50 font-bold mb-2 text-black">
-                        <div class="grid grid-cols-2 gap-2 text-black text-black text-black">
-                            <input type="text" id="setup-sales-rep" placeholder="Sales Rep" class="border p-3 rounded-xl bg-slate-50 font-bold text-black">
-                            <input type="tel" id="setup-sales-phone" placeholder="Rep Phone #" class="border p-3 rounded-xl bg-slate-50 font-bold text-black">
-                        </div>
+                    <div class="pt-6 border-t border-slate-100 text-center">
+                        <button onclick="handleSignOut()" class="w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:bg-red-50 hover:text-red-500 transition-all">Sign Out Account</button>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-3 text-black">
-                        <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest text-black">Plant Close</label>
-                            <input type="time" id="setup-plant-close" value="15:30" class="w-full border p-3 rounded-xl bg-slate-50 font-bold text-black">
-                        </div>
-                    </div>
-
-                    <div class="pt-6 border-t border-slate-100 text-center text-black">
-                        <button onclick="handleSignOut()" class="w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest hover:bg-red-50 hover:text-red-500 transition-all text-center">Sign Out Account</button>
-                    </div>
-
-                    <button onclick="saveSetup()" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg border border-yellow-400/30 mt-4 active:scale-95 transition-transform text-yellow-400">Save Parameters</button>
+                    <button onclick="saveSetup()" class="w-full bg-black text-yellow-400 py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg border border-yellow-400/30 mt-4 active:scale-95 transition-transform text-yellow-400">Save Project Parameters</button>
                 </div>
             </div>
         </main>
     </div>
 
     <!-- BOTTOM NAVIGATION -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-[#facc15]">Dashboard</span>
-        </button>
-        <button onclick="switchTab('fleet')" id="nav-fleet" class="flex flex-col items-center p-2 text-slate-500 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Fleet</span>
-        </button>
-        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center p-2 text-slate-500 transition-all text-black">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52,.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1,4.71-7.14l2.48,23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-slate-400">Config</span>
-        </button>
-        <button onclick="generateReport()" class="flex flex-col items-center p-2 text-slate-500 hover:text-yellow-400 transition-all text-black">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg>
-            <span class="nav-label text-[9px] font-black mt-1 uppercase tracking-widest text-center text-slate-400">Run report</span>
-        </button>
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-black border-t border-yellow-400/20 flex justify-around p-3 z-50 no-print shadow-2xl hidden text-white">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center p-2 tab-active transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M224,120v88a16,16,0,0,1-16,16H160a8,8,0,0,1-8-8V160H104v48a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,11.32,0l80,80A8,8,0,0,1,224,120Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Dashboard</span></button>
+        <button onclick="switchTab('fleet')" id="nav-fleet" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M245.52,142.17l-14.45-50.58A24,24,0,0,0,208,72H48a24,24,0,0,0-23.07,19.59L10.48,142.17A23.9,23.9,0,0,0,8,152v48a16,16,0,0,0,16,16H232a16,16,0,0,0,16-16V152A23.9,23.9,0,0,0,245.52,142.17ZM48,88H208a8,8,0,1,1,7.69,5.8l13.72,48a8,8,0,0,1,.59,3L230,144.83,212.83,128H43.17L26,144.83,26,142.17l14.31-50.11A8,8,0,0,1,48,88ZM232,200H24V161.43l13.43-13.43a8,8,0,0,1,11.31,0L67.43,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,0,1,11.31,0L143.4,166.7a8,8,0,0,0,11.31,0l26.63-26.63a8,8,0,1,1,11.31,0l18.66,18.66,20.69,20.69V200ZM72,112a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16H64A8,8,0,0,1,72,112Zm136,8a8,8,0,0,0,0-16H192a8,8,0,0,0,0,16Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Fleet</span></button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M236.46,147.21l-19.46-13.62a8,8,0,0,1-3.21-6.57V129a8,8,0,1,1,3.21-6.57l19.46-13.62a8,8,0,0,0,2.15-11.23L223.11,72.4a8,8,0,0,0-10.74-2.84l-20.89,11.41a8,8,0,0,1-8.52-.75,81.16,81.16,0,0,0-13.92-8.03,8,8,0,0,1-4.71-7.14l-2.48-23.63a8,8,0,0,0-8-7.16H120a8,8,0,0,0-8,7.16l-2.48,23.63a8,8,0,0,1-4.71,7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1-8.52,.75L61.48,69.56a8,8,0,0,0-10.74,2.84L35.25,97.58a8,8,0,0,0,2.15,11.23l19.46,13.62a8,8,0,0,1,3.21,6.57v2.02a8,8,0,0,1-3.21,6.57L37.4,151.21a8,8,0,0,0-2.15,11.23l15.49,25.18a8,8,0,0,0,10.74,2.84l20.89-11.41a8,8,0,0,1,8.52-.75,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,4.71,7.14l2.48,23.63a8,8,0,0,0,8,7.16h32.14a8,8,0,0,0,8-7.16l2.48-23.63a8,8,0,0,1,4.71-7.14,81.16,81.16,0,0,0-13.92,8.03,8,8,0,0,1,8.52,.75l20.89,11.41a8,8,0,0,0,10.74-2.84l15.49-25.18A8,8,0,0,0,236.46,147.21ZM128,156a28,28,0,1,1,28-28A28,28,0,0,1,128,156Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Config</span></button>
+        <button onclick="generateReport()" class="flex flex-col items-center p-2 transition-all"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M200,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H56V48H200V208ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z"></path></svg><span class="text-[9px] font-black mt-1 uppercase tracking-widest">Report</span></button>
     </nav>
-
-    <!-- Daily Report Overlay -->
-    <div id="report-view" class="print-only hidden fixed inset-0 z-[100] bg-white overflow-y-auto p-8 no-print:p-4 text-black">
-        <h1 class="text-4xl font-black italic tracking-tighter border-b-4 border-black pb-2 uppercase text-center text-black">pavingPM Daily Report</h1>
-        <p id="report-date" class="text-slate-500 font-bold uppercase mt-2 text-center"></p>
-        <p id="report-job-title" class="text-xl font-bold mt-1 text-slate-700 uppercase text-center"></p>
-        <div class="grid grid-cols-3 gap-6 my-8 border-2 border-black p-6 rounded-2xl text-black">
-            <div class="text-center text-black text-black"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Delivered</p><p class="text-3xl font-black text-black" id="report-received-val">0 t</p></div>
-            <div class="text-center text-black text-black"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Depth</p><p class="text-3xl font-black text-black" id="report-depth">0"</p></div>
-            <div class="text-center text-black text-black"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Yield Var.</p><p class="text-3xl font-black text-black" id="report-yield">0%</p></div>
-        </div>
-        <table class="w-full text-left border-collapse text-black text-black">
-            <thead class="bg-black text-yellow-400 uppercase text-[10px] tracking-[0.2em] font-black text-white text-black text-black text-black">
-                <tr>
-                    <th class="p-4 border text-white text-black text-black">#</th>
-                    <th class="p-4 border text-center font-bold text-white text-black text-black">Arrival</th>
-                    <th class="p-4 border text-center text-white text-black text-black text-black">Unit #</th>
-                    <th class="p-4 border text-right text-white text-black text-black text-black text-black text-black text-black">Net Tons</th>
-                </tr>
-            </thead>
-            <tbody id="report-table-body" class="font-bold"></tbody>
-        </table>
-        <div class="mt-12 no-print flex justify-center pb-20 text-black text-black">
-            <button onclick="window.print()" class="bg-black text-yellow-400 px-10 py-4 rounded-full font-black uppercase tracking-widest shadow-xl text-center text-black">Export Daily PDF</button>
-            <button onclick="closeReport()" class="ml-6 text-slate-400 font-bold uppercase text-xs text-black">Back</button>
-        </div>
-    </div>
 
     <!-- MODULE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import {
-            getAuth,
-            onAuthStateChanged,
-            signInWithEmailAndPassword,
-            createUserWithEmailAndPassword,
-            GoogleAuthProvider,
-            signInWithPopup,
-            signOut
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- THE DATABASE (PLANT_DB) ---
+        // --- DATABASE ---
         const PLANT_DB = [
             { lng: -118.4033884, lat: 37.41938687, name: "Granite: Bishop Facility", rep: "Angela McAbee", phone: "(661) 331-3215", addr: "5 Bridges Road, Bishop, CA. 93514" },
             { lng: -121.880199, lat: 37.57599303, name: "Martin Marietta: Sunol", rep: "Mark Weiler", phone: "(925) 519-6828", addr: "7999 Athenour Way, Sunol CA 94586" },
@@ -382,108 +310,81 @@
         ].sort((a, b) => a.name.localeCompare(b.name));
 
         const proxyUrl = "/.netlify/functions/gemini";
-
-        // --- FIREBASE CONFIGURATION ---
-        let firebaseConfig;
-        if (typeof __firebase_config !== "undefined") {
-            firebaseConfig = JSON.parse(__firebase_config);
-        } else {
-            firebaseConfig = {
-                apiKey: "AIzaSyBYSkFXUCVrRbWR_x2vKlETnB-bTaPitpQ",
-                authDomain: "trucktracker-90dad.firebaseapp.com",
-                projectId: "trucktracker-90dad",
-                storageBucket: "trucktracker-90dad.firebasestorage.app",
-                messagingSenderId: "437299264555",
-                appId: "1:437299264555:web:f21f05ad0b5c031a28be6e",
-                measurementId: "G-MYJQ26Z2KF"
-            };
-        }
+        const firebaseConfig = JSON.parse(__firebase_config);
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const activeAppId = typeof __app_id !== "undefined" ? __app_id : "trucktracker-production";
+        const activeAppId = typeof __app_id !== "undefined" ? __app_id : "pavingpm-production";
 
         let user = null;
-        window.state = window.state || {
-            jobPo: "", jobAddress: "", jobSf: "",
-            plantName: "No Plant Selected", plantAddress: "", plantPhone: "",
-            salesRep: "Unassigned", salesRepPhone: "",
-            totalGoal: "", plannedLoads: "", inches: "",
-            plantClosing: "15:30", travelTimeForward: 0, travelTimeReturn: 0,
-            baselineForward: 0, baselineReturn: 0,
-            loads: [], fleet: [], avgTruckSize: 18.0,
-            trafficIncident: null, activeTab: "dashboard",
-            plantBannerDismissed: false
+        let confirmationResult = null;
+        window.state = { jobPo: "", jobAddress: "", jobSf: 0, plantName: "No Plant Selected", plantAddress: "", salesRep: "Unassigned", salesRepPhone: "", totalGoal: 0, plannedLoads: 0, inches: 0, plantClosing: "15:30", travelTimeForward: 0, travelTimeReturn: 0, baselineForward: 0, baselineReturn: 0, loads: [], fleet: [], activeTab: "dashboard", plantBannerDismissed: false };
+
+        // --- AUTH LOGIC ---
+        window.toggleAuthMethod = () => {
+            const emailSec = document.getElementById('auth-email-section');
+            const phoneSec = document.getElementById('auth-phone-section');
+            const label = document.getElementById('toggle-label');
+            const createBtn = document.getElementById('create-account-btn');
+            const isEmailHidden = emailSec.classList.contains('hidden');
+            emailSec.classList.toggle('hidden', !isEmailHidden);
+            phoneSec.classList.toggle('hidden', isEmailHidden);
+            label.innerText = isEmailHidden ? "Mobile" : "Email";
+            createBtn.classList.toggle('hidden', !isEmailHidden);
         };
 
-        // --- AUTHENTICATION ---
         window.handleAuth = async (mode) => {
-            const emailEl = document.getElementById("auth-email");
-            const passEl = document.getElementById("auth-pass");
-            const email = emailEl?.value?.trim();
-            const pass = passEl?.value;
+            const email = document.getElementById("auth-email").value.trim();
+            const pass = document.getElementById("auth-pass").value;
             if (!email || !pass) return window.showToast?.("Email/Pass Required");
             try {
-                if (mode === "signup") {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                    window.showToast?.("Account Created");
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                    window.showToast?.("Welcome Back");
-                }
-            } catch (e) {
-                console.error(e);
-                if (e.code === 'auth/operation-not-allowed') {
-                    window.showToast?.("Enable Email/Pass in Firebase Console.");
-                } else if (e.code === 'auth/unauthorized-domain') {
-                    window.showToast?.(`Add ${window.location.hostname} to Firebase whitelist.`);
-                } else {
-                    window.showToast?.(String(e.message || e).replace("Firebase: ", ""));
-                }
-            }
+                if (mode === "signup") { await createUserWithEmailAndPassword(auth, email, pass); window.showToast?.("Account Created!"); } 
+                else { await signInWithEmailAndPassword(auth, email, pass); }
+            } catch (e) { window.showToast?.(String(e.message || e).replace("Firebase: ", "")); }
         };
 
         window.handleGoogleAuth = async () => {
             const provider = new GoogleAuthProvider();
-            try {
-                await signInWithPopup(auth, provider);
-                window.showToast?.("Signed in with Google");
-            } catch (e) {
-                console.error(e);
-                if (e.code === 'auth/unauthorized-domain') {
-                    window.showToast?.(`Whitelisting required for ${window.location.hostname}.`);
-                } else {
-                    window.showToast?.("Google Sign-In failed.");
-                }
+            try { await signInWithPopup(auth, provider); } 
+            catch (e) { console.error(e); window.showToast?.("Google login failed."); }
+        };
+
+        window.handlePhoneAuth = async () => {
+            const phone = document.getElementById('auth-phone').value.trim();
+            const otpInput = document.getElementById('auth-otp');
+            const actionBtn = document.getElementById('phone-action-btn');
+            if (!confirmationResult) {
+                if (!phone) return window.showToast("Phone Required");
+                try {
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
+                    confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+                    document.getElementById('otp-container').classList.remove('hidden');
+                    actionBtn.innerText = "Verify SMS Code";
+                    window.showToast("SMS Code Sent");
+                } catch (e) { console.error(e); window.showToast("SMS failed. Check format: +1..."); }
+            } else {
+                const code = otpInput.value.trim();
+                if (!code) return window.showToast("Enter Code");
+                try { await confirmationResult.confirm(code); window.showToast("Signed In"); } catch (e) { window.showToast("Invalid Code"); }
             }
         };
 
-        window.handleSignOut = async () => {
-            await signOut(auth);
-            window.showToast?.("Signed Out");
-            location.reload();
-        };
+        window.handleSignOut = async () => { await signOut(auth); location.reload(); };
 
-        // DOM-Safe Auth Listener
+        // --- CORE STARTUP ---
         window.addEventListener('DOMContentLoaded', () => {
             onAuthStateChanged(auth, (u) => {
                 user = u;
-                const viewAuth = document.getElementById('view-auth');
-                const mainApp = document.getElementById('main-app-container');
-                const bottomNav = document.getElementById('bottom-nav');
-
-                if (!viewAuth || !mainApp || !bottomNav) return;
-
                 if (user) {
-                    viewAuth.classList.add('hidden');
-                    mainApp.classList.remove('hidden');
-                    bottomNav.classList.remove('hidden');
+                    document.getElementById('view-auth').classList.add('hidden');
+                    document.getElementById('main-app-container').classList.remove('hidden');
+                    document.getElementById('bottom-nav').classList.remove('hidden');
                     syncData();
                 } else {
-                    viewAuth.classList.remove('hidden');
-                    mainApp.classList.add('hidden');
-                    bottomNav.classList.add('hidden');
+                    document.getElementById('view-auth').classList.remove('hidden');
+                    document.getElementById('main-app-container').classList.add('hidden');
+                    document.getElementById('bottom-nav').classList.add('hidden');
                 }
             });
         });
@@ -502,231 +403,168 @@
         window.saveToCloud = async () => {
             if (!user) return;
             const docRef = doc(db, "artifacts", activeAppId, "users", user.uid, "projectData", "currentJob");
-            try {
-                await setDoc(docRef, window.state, { merge: true });
-            } catch (e) { console.error("Save Error", e); }
+            try { await setDoc(docRef, window.state, { merge: true }); } catch (e) { console.error("Save Error", e); }
         };
 
-        // --- CORE UI LOGIC ---
-        window.showToast = (m) => { const t = document.getElementById('toast'); if(t) { t.innerText = m; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 4000); } };
-
+        // --- LOGIC RESTORATION ---
         window.updateUI = () => {
             const s = window.state;
-            const loads = s.loads || [];
-            const received = loads.reduce((sum, l) => sum + l.tons, 0);
-            const currentCount = loads.length;
-            const liveAvg = currentCount > 0 ? (received / currentCount) : (s.avgTruckSize || 18.0);
-            const remaining = Math.max(0, s.totalGoal - received);
-            const progress = (received / (s.totalGoal || 1)) * 100;
-
-            const updateText = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
-            updateText('display-loads-count', currentCount);
-            updateText('display-loads-goal', s.plannedLoads || "--");
-            updateText('display-received', received.toFixed(1));
-            updateText('display-remaining', remaining.toFixed(1));
-            updateText('display-avg-size', liveAvg.toFixed(1));
+            const received = (s.loads || []).reduce((sum, l) => sum + l.tons, 0);
+            const count = (s.loads || []).length;
             
+            const setTxt = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
+            setTxt('display-loads-count', count);
+            setTxt('display-loads-goal', s.plannedLoads || "--");
+            setTxt('display-received', received.toFixed(1));
+            setTxt('display-remaining', Math.max(0, s.totalGoal - received).toFixed(1));
+            setTxt('display-avg-size', count > 0 ? (received/count).toFixed(1) : (s.avgTruckSize || "18.0"));
+            setTxt('display-plant-name', s.plantName);
+            setTxt('display-sales-rep', s.salesRep);
+            setTxt('travel-forward', s.travelTimeForward ? `${s.travelTimeForward} m` : "-- m");
+            setTxt('travel-return', s.travelTimeReturn ? `${s.travelTimeReturn} m` : "-- m");
+
             const pb = document.getElementById('progress-bar');
-            if(pb) pb.style.width = `${Math.min(100, progress)}%`;
-            
-            const header = document.getElementById('header-job-name');
-            if(header) header.innerText = (s.jobPo && s.jobAddress) ? `${s.jobPo} - ${s.jobAddress}` : (s.jobPo || s.jobAddress || "Load Console");
-
-            updateText('display-plant-name', s.plantName || "No Plant Selected");
-            updateText('display-sales-rep', s.salesRep || "No Sales Rep Set");
-            updateText('travel-forward', `${s.travelTimeForward || '--'} m`);
-            updateText('travel-return', `${s.travelTimeReturn || '--'} m`);
+            if(pb) pb.style.width = `${Math.min(100, (received / (s.totalGoal || 1)) * 100)}%`;
+            const hdr = document.getElementById('header-job-name');
+            if(hdr) hdr.innerText = (s.jobPo && s.jobAddress) ? `${s.jobPo} - ${s.jobAddress}` : "pavingPM";
 
             const callBtn = document.getElementById('sales-rep-call-btn');
             if (callBtn) {
-                if (s.salesRepPhone) {
-                    callBtn.href = `tel:${s.salesRepPhone.replace(/[^0-9]/g, '')}`;
-                    callBtn.classList.remove('hidden');
-                } else { callBtn.classList.add('hidden'); }
+                if (s.salesRepPhone) { callBtn.href = `tel:${s.salesRepPhone.replace(/[^0-9]/g, '')}`; callBtn.classList.remove('hidden'); } 
+                else { callBtn.classList.add('hidden'); }
             }
 
             if (s.activeTab === 'settings') {
-                const setVal = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ""; };
+                const setVal = (id, v) => { const el = document.getElementById(id); if(el) el.value = v || ""; };
                 setVal('setup-job-address', s.jobAddress);
-                setVal('setup-job-po', s.jobPo);
-                setVal('setup-job-sf', s.jobSf);
                 setVal('setup-plant-address', s.plantAddress);
                 setVal('setup-sales-rep', s.salesRep);
                 setVal('setup-sales-phone', s.salesRepPhone);
                 setVal('setup-total-tons', s.totalGoal);
-                setVal('setup-planned-loads', s.plannedLoads);
                 setVal('setup-depth', s.inches);
-                setVal('setup-plant-close', s.plantClosing);
-
+                setVal('setup-job-po', s.jobPo);
+                setVal('setup-job-sf', s.jobSf);
                 const pN = document.getElementById('setup-plant-name');
                 if(pN) pN.innerHTML = '<option value="">Select Facility</option>' + PLANT_DB.map(p => `<option value="${p.name}" ${s.plantName === p.name ? 'selected' : ''}>${p.name}</option>`).join('');
             }
-
-            window.calculateLogistics(); window.renderHistory(); window.calculateYield();
             
             ['view-dashboard', 'view-fleet', 'view-settings'].forEach(v => {
                 const el = document.getElementById(v);
                 if(el) el.classList.toggle('hidden', v !== `view-${s.activeTab}`);
             });
 
-            ['dashboard', 'fleet', 'settings'].forEach(tab => {
-                const navBtn = document.getElementById(`nav-${tab}`);
-                if(navBtn) {
-                    navBtn.className = `flex flex-col items-center p-2 ${s.activeTab === tab ? 'tab-active' : 'text-slate-500'}`;
-                    const label = navBtn.querySelector('.nav-label');
-                    if(label) label.className = `nav-label text-[9px] font-black mt-1 uppercase tracking-widest ${s.activeTab === tab ? 'text-[#facc15]' : 'text-slate-400'}`;
-                }
+            const navs = ['nav-dashboard', 'nav-fleet', 'nav-settings'];
+            navs.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.toggle('tab-active', id === `nav-${s.activeTab}`);
             });
+
+            window.renderHistory(); window.calculateYield(); window.calculateLogistics();
+            if(s.activeTab === 'fleet') window.renderFleet();
         };
 
-        window.switchTab = (tab) => {
-            window.closeReport();
-            window.state.activeTab = tab;
-            window.updateUI();
-            if (tab === 'fleet') window.renderFleet();
-        };
+        window.switchTab = (tab) => { window.state.activeTab = tab; window.updateUI(); };
 
         window.renderHistory = () => {
             const list = document.getElementById('load-list'); if(!list) return;
             list.innerHTML = window.state.loads.map((l, i) => `
-                <div class="p-4 flex justify-between items-center hover:bg-yellow-50 transition border-l-4 border-transparent hover:border-yellow-400 bg-white text-black">
-                    <div class="text-black text-black text-black">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-[10px] font-black bg-slate-900 text-yellow-400 px-2 py-0.5 rounded italic">Load #${window.state.loads.length - i}</span>
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-black text-black text-black text-black">Unit ${l.truckId}</span>
-                        </div>
-                        <p class="font-black text-2xl mt-2 text-black text-black text-black text-black text-black">${l.tons.toFixed(2)} <span class="text-sm text-slate-400 font-bold uppercase italic text-black text-black text-black text-black">tons</span></p>
+                <div class="p-4 flex justify-between items-center hover:bg-yellow-50 transition border-l-4 border-transparent hover:border-yellow-400 bg-white">
+                    <div class="text-black">
+                        <div class="flex items-center space-x-2"><span class="text-[10px] font-black bg-slate-900 text-yellow-400 px-2 py-0.5 rounded italic">Load #${window.state.loads.length - i}</span><span class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-slate-400">Unit ${l.truckId}</span></div>
+                        <p class="font-black text-2xl mt-2 text-black">${l.tons.toFixed(2)} <span class="text-sm text-slate-400 font-bold uppercase italic">tons</span></p>
                     </div>
-                    <div class="flex flex-col items-end space-y-2 text-black text-black text-black text-black">
-                        <span class="text-[10px] font-black text-slate-500 bg-slate-200 px-2 py-1 rounded-md border border-slate-300 shadow-sm text-black text-black text-black text-black">${l.time}</span>
-                        <button onclick="removeLoad(${l.id})" class="text-slate-300 hover:text-red-500 transition-colors text-black text-black text-black text-black text-black">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg>
-                        </button>
-                    </div>
+                    <div class="flex flex-col items-end space-y-2"><span class="text-[10px] font-black text-slate-500 bg-slate-200 px-2 py-1 rounded-md border border-slate-300 shadow-sm">${l.time}</span><button onclick="removeLoad(${l.id})" class="text-slate-300 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button></div>
                 </div>`).join('') || '<div class="p-12 text-center text-slate-400 italic text-sm font-medium">No loads recorded.</div>';
         };
 
         window.calculateYield = () => {
-            const sfInput = document.getElementById('input-sf'); if(!sfInput) return;
-            const sf = parseFloat(sfInput.value) || 0;
-            const inches = parseFloat(window.state.inches) || 0;
-            const theo = (sf / 159) * inches;
+            const sf = parseFloat(document.getElementById('input-sf')?.value) || 0;
+            const theo = (sf / 159) * (parseFloat(window.state.inches) || 0);
             const rec = window.state.loads.reduce((sum, l) => sum + l.tons, 0);
-            const updateText = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
-            updateText('display-theoretical', theo.toFixed(1));
-            const badge = document.getElementById('yield-badge');
-            const card = document.getElementById('yield-card');
-            if(!badge || !card) return;
-            if (sf === 0 || rec === 0) { badge.innerText="READY"; badge.className="px-2 py-1 rounded text-[10px] font-black bg-slate-800 uppercase text-slate-500 border border-yellow-400/10 text-black text-black"; card.classList.remove('heavy-glow'); return; }
+            const el = document.getElementById('display-theoretical'); if(el) el.innerText = theo.toFixed(1);
+            const badge = document.getElementById('yield-badge'); if(!badge) return;
+            if (sf === 0 || rec === 0) { badge.innerText="READY"; badge.className="px-2 py-0.5 rounded text-[10px] font-black bg-slate-100 uppercase text-slate-400"; return; }
             const v = rec / (theo || 1);
-            if (v > 1.05) { badge.innerText="HEAVY"; badge.className="px-2 py-1 rounded text-[10px] font-black bg-red-600 uppercase text-white"; card.classList.add('heavy-glow'); }
-            else if (v < 0.95) { badge.innerText="LIGHT"; badge.className="px-2 py-1 rounded text-[10px] font-black bg-yellow-400 uppercase text-black"; card.classList.remove('heavy-glow'); }
-            else { badge.innerText="ON TARGET"; badge.className="px-2 py-1 rounded text-[10px] font-black bg-green-500 uppercase text-white"; card.classList.remove('heavy-glow'); }
+            if (v > 1.05) { badge.innerText="HEAVY"; badge.className="px-2 py-0.5 rounded text-[10px] font-black bg-red-600 uppercase text-white"; }
+            else if (v < 0.95) { badge.innerText="LIGHT"; badge.className="px-2 py-0.5 rounded text-[10px] font-black bg-yellow-400 uppercase text-black"; }
+            else { badge.innerText="ON TARGET"; badge.className="px-2 py-0.5 rounded text-[10px] font-black bg-green-500 uppercase text-white"; }
         };
 
         window.calculateLogistics = () => {
             const s = window.state; const now = new Date();
             const [hours, mins] = (s.plantClosing || "15:30").split(':');
             const closeDate = new Date(); closeDate.setHours(hours, mins, 0);
-            const cutoffDate = new Date(closeDate.getTime() - (s.travelTimeReturn + 10) * 60000);
+            const cutoffDate = new Date(closeDate.getTime() - (s.travelTimeReturn || 40) * 60000);
             const diffMins = Math.floor((cutoffDate - now) / 60000);
             const ctEl = document.getElementById('display-cutoff-time');
             const cdEl = document.getElementById('display-countdown');
             const cardEl = document.getElementById('cutoff-card');
-            const titleEl = document.getElementById('cutoff-title');
-            if (cdEl && cardEl) {
-                if (diffMins < 0) {
-                    cdEl.innerText = "CUTOFF EXCEEDED";
-                    cdEl.className = "text-[10px] text-white font-black animate-pulse mt-1 uppercase text-white text-white text-white";
-                    cardEl.className = "bg-red-600 rounded-xl shadow-sm p-4 flex flex-col justify-between transition-all duration-500 text-white text-white text-white";
-                    if(ctEl) { ctEl.innerText = cutoffDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); ctEl.className = "text-2xl font-black tabular-nums text-white text-white text-white"; }
-                } else {
-                    cdEl.innerText = `Exit site by ${cutoffDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-                    cdEl.className = "text-[10px] text-slate-500 font-black mt-1 uppercase text-black text-black text-black";
-                    cardEl.className = "bg-white rounded-xl shadow-sm border p-4 flex flex-col justify-between transition-all duration-500 text-black text-black text-black";
-                    if(ctEl) { ctEl.innerText = cutoffDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); ctEl.className = "text-2xl font-black tabular-nums text-slate-900 text-black text-black"; }
-                }
+            if(ctEl) ctEl.innerText = cutoffDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            if(cdEl && cardEl) {
+                if(diffMins < 0) { cdEl.innerText = "CUTOFF EXCEEDED"; cardEl.classList.add('pulse-border'); } 
+                else { cdEl.innerText = `Exit site in ${diffMins}m`; cardEl.classList.remove('pulse-border'); }
             }
-            const cTimeDiff = Math.floor((closeDate - now) / 60000);
-            const pBanner = document.getElementById('plant-close-banner');
-            const pText = document.getElementById('plant-close-text');
-            if (cTimeDiff <= 120 && cTimeDiff > 0 && !s.plantBannerDismissed) {
-                const remaining = Math.max(0, s.totalGoal - (s.loads || []).reduce((sum, l) => sum + l.tons, 0)).toFixed(1);
-                if(pBanner) pBanner.classList.remove('hidden');
-                if(pText) pText.innerText = `${Math.floor(cTimeDiff/60)}h ${cTimeDiff%60}m till close. Contact plant with remaining ${remaining} tons.`;
-            } else if (pBanner) { pBanner.classList.add('hidden'); }
         };
 
-        // --- AI CALLS ---
+        // --- FLEET SYSTEM RESTORATION ---
+        window.addTruck = () => {
+            const id = document.getElementById('fleet-id')?.value.trim().toUpperCase(); if (!id) return window.showToast("ID Required");
+            window.state.fleet.push({ id, driver: document.getElementById('fleet-driver')?.value.trim(), phone: document.getElementById('fleet-phone')?.value.trim() });
+            document.getElementById('fleet-id').value = ''; document.getElementById('fleet-driver').value = ''; document.getElementById('fleet-phone').value = '';
+            window.saveToCloud(); window.updateUI(); window.showToast("Unit Added");
+        };
+
+        window.renderFleet = () => {
+            const list = document.getElementById('fleet-list'); if(!list) return;
+            const truckSelect = document.getElementById('new-load-truck');
+            if(truckSelect) truckSelect.innerHTML = '<option value="Manual">Unit #</option>' + (window.state.fleet || []).map(t => `<option value="${t.id}">${t.id}</option>`).join('');
+            list.innerHTML = (window.state.fleet || []).map((t, idx) => `
+                <div class="bg-white p-4 rounded-xl border-l-4 border-yellow-400 shadow-sm flex justify-between items-center text-black">
+                    <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 opacity-30">Unit #</p><p class="font-black text-xl">${t.id}</p><p class="text-xs text-slate-500 font-bold">${t.driver || 'No Driver'}</p></div>
+                    <div class="flex items-center space-x-2">
+                        ${t.phone ? `<a href="tel:${t.phone.replace(/[^0-9]/g, '')}" class="bg-black text-yellow-400 p-2 rounded-full shadow-lg active:bg-yellow-400 active:text-black"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>` : ''}
+                        <button onclick="removeTruck('${t.id}')" class="text-slate-200 p-2 hover:text-red-500 font-bold text-black">X</button>
+                    </div>
+                </div>`).join('') || '<p class="p-8 text-center text-slate-400 italic font-bold text-black">Add units or scan a ticket.</p>';
+        };
+        window.removeTruck = (id) => { if(confirm(`Remove truck ${id}?`)) { window.state.fleet = window.state.fleet.filter(t => t.id !== id); window.saveToCloud(); window.updateUI(); } };
+
+        // --- AI & EXTERNAL ---
         async function callGemini(payload) {
             try {
-                const response = await fetch(proxyUrl, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload) 
-                });
-                if (!response.ok) {
-                    const errText = await response.text();
-                    window.showToast?.(`Server Error: ${response.status}. Check Netlify logs.`);
-                    throw new Error(`Proxy error: ${response.status} - ${errText}`);
-                }
+                const response = await fetch(proxyUrl, { method: 'POST', body: JSON.stringify(payload) });
+                if (!response.ok) throw new Error("Proxy error: " + response.status);
                 return await response.json();
-            } catch (e) { 
-                console.error(e); 
-                window.showToast?.("AI Connection Error: Deploy gemini.js to Netlify."); 
-                return {}; 
-            }
+            } catch (e) { console.error(e); window.showToast?.("AI Connection Failed."); return {}; }
         }
 
         window.findClosestPlant = async () => {
-            const jaIn = document.getElementById('setup-job-address');
-            if (!jaIn?.value) return window.showToast("Enter Job Address First");
-            const btn = document.getElementById('plant-search-btn');
-            if(btn) btn.classList.add('animate-pulse');
+            const jaIn = document.getElementById('setup-job-address'); if (!jaIn?.value) return window.showToast("Enter Job Address");
+            const btn = document.getElementById('plant-search-btn'); if(btn) btn.classList.add('animate-pulse');
             try {
-                window.state.jobAddress = jaIn.value;
-                const result = await callGemini({
-                    contents: [{ parts: [{ text: `Geocode address: '${jaIn.value}'. Return ONLY JSON: { "lat": number, "lng": number }.` }] }],
-                    systemInstruction: { parts: [{ text: "Extract latitude and longitude." }] }
-                });
+                const result = await callGemini({ contents: [{ parts: [{ text: `Geocode address: '${jaIn.value}'. Return JSON: { "lat": number, "lng": number }.` }] }] });
                 const jobCoords = JSON.parse(result.candidates?.[0]?.content?.parts?.[0]?.text.match(/\{.*\}/s)?.[0] || "{}");
                 if (jobCoords.lat) {
-                    let closest = null; let minD = Infinity;
-                    PLANT_DB.forEach(plant => {
-                        const d = Math.sqrt(Math.pow(plant.lat - jobCoords.lat, 2) + Math.pow(plant.lng - jobCoords.lng, 2));
-                        if (d < minD) { minD = d; closest = plant; }
-                    });
-                    if (closest) {
-                        window.state.plantName = closest.name;
-                        window.state.plantAddress = closest.addr;
-                        window.state.salesRep = closest.rep;
-                        window.state.salesRepPhone = closest.phone;
-                        await window.saveToCloud();
-                        window.updateUI();
-                        window.showToast?.(`Located: ${closest.name}`);
-                    }
+                    let closest = null, minD = Infinity;
+                    PLANT_DB.forEach(p => { const d = Math.sqrt(Math.pow(p.lat-jobCoords.lat, 2) + Math.pow(p.lng-jobCoords.lng, 2)); if(d<minD){ minD=d; closest=p; }});
+                    if (closest) { window.state.plantName=closest.name; window.state.plantAddress=closest.addr; window.state.salesRep=closest.rep; window.state.salesRepPhone=closest.phone; window.saveToCloud(); window.updateUI(); window.showToast(`Found: ${closest.name}`); }
                 }
-            } catch (e) { window.showToast?.("Plant Search Failed"); } finally { if(btn) btn.classList.remove('animate-pulse'); }
+            } catch (e) { window.showToast("Search Failed"); } finally { if(btn) btn.classList.remove('animate-pulse'); }
         };
 
-        window.updateLiveTraffic = async (isAuto = false) => {
-            const j = window.state.jobAddress; const p = window.state.plantAddress;
-            if (!j || !p) return;
-            if (!isAuto) window.showToast("Updating Traffic...");
+        window.updateLiveTraffic = async () => {
+            const s = window.state; if (!s.jobAddress || !s.plantAddress) return;
             try {
-                const result = await callGemini({
-                    contents: [{ parts: [{ text: `Super10 dump truck traffic estimate. Route1: '${p}' to '${j}'. Route2: '${j}' to '${p}'. JSON ONLY: { "forward_mins": num, "return_mins": num, "incident": "str or null" }.` }] }],
-                    tools: [{ "google_search": {} }],
-                    systemInstruction: { parts: [{ text: "Provide traffic data in JSON format only." }] }
-                });
+                const result = await callGemini({ contents: [{ parts: [{ text: `Super10 traffic estimate route from '${s.plantAddress}' to '${s.jobAddress}'. JSON: { "forward_mins": num, "return_mins": num }.` }] }], tools: [{ "google_search": {} }] });
                 const data = JSON.parse(result.candidates?.[0]?.content?.parts?.[0]?.text.match(/\{.*\}/s)?.[0] || "{}");
                 if (data.forward_mins) {
-                    const s = window.state;
                     if (!s.baselineForward) s.baselineForward = data.forward_mins;
-                    if (!s.baselineReturn) s.baselineReturn = data.return_mins;
-                    s.travelTimeForward = data.forward_mins;
-                    s.travelTimeReturn = data.return_mins;
-                    s.trafficIncident = data.incident;
+                    s.travelTimeForward = data.forward_mins; s.travelTimeReturn = data.return_mins;
+                    const banner = document.getElementById('traffic-delay-banner');
+                    if(data.forward_mins > s.baselineForward * 1.15 && banner) {
+                        banner.classList.remove('hidden');
+                        document.getElementById('traffic-delay-text').innerText = `Major delay. Travel time is now ${data.forward_mins}m.`;
+                    }
                     window.saveToCloud(); window.updateUI();
                 }
             } catch (e) { console.error(e); }
@@ -734,45 +572,19 @@
 
         window.handleImageUpload = async (event) => {
             const file = event.target.files[0]; if (!file) return;
-            window.showToast?.("Analyzing Ticket...");
+            window.showToast("Scanning Ticket...");
             const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = async () => {
                 const base64 = reader.result.split(',')[1];
                 try {
-                    const result = await callGemini({
-                        contents: [{ parts: [{ text: "Extract: Net Tons, Truck ID." }, { inlineData: { mimeType: "image/png", data: base64 } }] }],
-                        systemInstruction: { parts: [{ text: "JSON ONLY: { 'tons': number, 'truckId': string }" }] }
-                    });
+                    const result = await callGemini({ contents: [{ parts: [{ text: "Extract Net Tons and Truck ID from ticket image." }, { inlineData: { mimeType: "image/png", data: base64 } }] }] });
                     const data = JSON.parse(result.candidates?.[0]?.content?.parts?.[0]?.text.match(/\{.*\}/s)?.[0] || "{}");
-                    if (data.tons) {
-                        window.state.loads.unshift({ id: Date.now(), tons: parseFloat(data.tons), truckId: String(data.truckId || "UNKNOWN").toUpperCase(), time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-                        window.saveToCloud(); window.showToast?.(`Logged ${data.tons}t`);
-                    }
-                } catch (e) { window.showToast?.("Scan Failed"); }
+                    if (data.tons) { window.state.loads.unshift({ id: Date.now(), tons: parseFloat(data.tons), truckId: String(data.truckId || "Manual").toUpperCase(), time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }); window.saveToCloud(); window.showToast(`Logged ${data.tons}t`); }
+                } catch (e) { window.showToast("Scan Failed"); }
             };
         };
 
-        window.autoCalculateTonsAndLoads = () => {
-            const sf = parseFloat(document.getElementById('setup-job-sf')?.value);
-            const depth = parseFloat(document.getElementById('setup-depth')?.value);
-            if (sf > 0 && depth > 0) {
-                const tons = (sf / 159) * depth;
-                const tonsEl = document.getElementById('setup-total-tons');
-                const loadsEl = document.getElementById('setup-planned-loads');
-                if(tonsEl) tonsEl.value = tons.toFixed(1);
-                if(loadsEl) loadsEl.value = Math.ceil(tons / 18);
-            }
-        };
-
-        window.handlePlantSelect = (name) => {
-            const plant = PLANT_DB.find(p => p.name === name);
-            if(plant) {
-                document.getElementById('setup-plant-address').value = plant.addr;
-                document.getElementById('setup-sales-rep').value = plant.rep;
-                document.getElementById('setup-sales-phone').value = plant.phone;
-            }
-        };
-
+        // --- HELPERS ---
         window.triggerScanner = () => { document.getElementById('ticket-file').click(); };
         window.addLoad = () => {
             const tonsIn = document.getElementById('new-load-tons'); const truckIn = document.getElementById('new-load-truck');
@@ -780,49 +592,32 @@
             window.state.loads.unshift({ id: Date.now(), tons: t, truckId: truckIn?.value || "Manual", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
             if(tonsIn) tonsIn.value = ''; window.saveToCloud(); window.showToast("Logged");
         };
-        window.addTruck = () => {
-            const id = document.getElementById('fleet-id')?.value.trim().toUpperCase(); if (!id) return window.showToast("ID Required");
-            window.state.fleet.push({ id, driver: document.getElementById('fleet-driver')?.value.trim(), phone: document.getElementById('fleet-phone')?.value.trim() });
-            const fid = document.getElementById('fleet-id'); if(fid) fid.value = '';
-            window.saveToCloud(); window.renderFleet(); window.showToast("Unit Added");
-        };
-        window.renderFleet = () => {
-            const list = document.getElementById('fleet-list'); if(!list) return;
-            const truckSelect = document.getElementById('new-load-truck');
-            if(truckSelect) truckSelect.innerHTML = '<option value="Manual">Unit #</option>' + window.state.fleet.map(t => `<option value="${t.id}">${t.id}</option>`).join('');
-            list.innerHTML = window.state.fleet.map((t, idx) => `
-                <div class="bg-white p-4 rounded-xl border-l-4 border-yellow-400 shadow-sm flex flex-col space-y-3">
-                    <div class="flex justify-between items-start text-black">
-                        <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1 opacity-30 text-black">Unit #</p><p class="font-black text-xl text-black">${t.id}</p></div>
-                        <div class="flex items-center space-x-2">
-                            ${t.phone ? `<a href="tel:${t.phone.replace(/[^0-9]/g, '')}" class="bg-black text-yellow-400 p-2 rounded-full shadow-lg active:bg-yellow-400 active:text-black text-yellow-400 text-center"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L143.16,155.3c-23.51-12.82-41.69-31-54.51-54.51l16.05-16.05a8.12,8.12,0,0,0,.56-.75,16,16,0,0,0,1.34-15.3l-.06-.13L85.44,41.43a16,16,0,0,0-18.42-9.28L35,39.69a16,16,0,0,0-12.44,14c-1.56,22.25,2.4,59.3,27.1,95s72.71,114.65,138.81,114.65l6.53,0a16,16,0,0,0,14.07-12.44l7.54-32A16,16,0,0,0,222.37,158.46Z"></path></svg></a>` : ''}
-                            <button onclick="removeTruck('${t.id}')" class="text-slate-200 p-2 hover:text-red-500 font-bold text-black">X</button>
-                        </div>
-                    </div>
-                </div>`).join('') || '<p class="p-8 text-center text-slate-400 italic font-bold">Add units or scan a ticket.</p>';
-        };
         window.removeLoad = (id) => { window.state.loads = window.state.loads.filter(l => l.id !== id); window.saveToCloud(); };
-        window.removeTruck = (id) => { if(confirm(`Remove truck ${id}?`)) { window.state.fleet = window.state.fleet.filter(t => t.id !== id); window.saveToCloud(); window.renderFleet(); } };
-        window.clearHistory = () => { if(confirm("Permanently erase all load records?")) { window.state.loads = []; window.saveToCloud(); } };
-        
-        window.generateReport = () => {
-            const s = window.state;
-            const rBody = document.getElementById('report-table-body');
-            if(rBody) rBody.innerHTML = s.loads.map((l, i) => `<tr><td class="p-4 border text-black text-black">${s.loads.length - i}</td><td class="p-4 border text-center font-bold text-black text-black">${l.time}</td><td class="p-4 border font-black uppercase text-center text-black text-black text-black text-black">${l.truckId}</td><td class="p-4 border text-right font-black text-black text-black text-black text-black">${l.tons.toFixed(2)}</td></tr>`).join('');
-            document.getElementById('main-app-container').classList.add('hidden');
-            const rv = document.getElementById('report-view'); if(rv) { rv.classList.remove('hidden'); rv.classList.remove('print-only'); }
-            window.scrollTo(0,0);
-        };
-        window.closeReport = () => { const m = document.getElementById('main-app-container'); if(m) m.classList.remove('hidden'); const r = document.getElementById('report-view'); if(r) { r.classList.add('hidden'); r.classList.add('print-only'); } };
+        window.clearHistory = () => { if(confirm("Clear log?")) { window.state.loads = []; window.saveToCloud(); } };
         window.saveSetup = () => {
             const s = window.state;
-            s.jobAddress = document.getElementById('setup-job-address').value; s.jobPo = document.getElementById('setup-job-po').value; s.jobSf = document.getElementById('setup-job-sf').value;
+            s.jobPo = document.getElementById('setup-job-po').value; s.jobAddress = document.getElementById('setup-job-address').value; s.jobSf = parseFloat(document.getElementById('setup-job-sf').value) || 0;
+            s.totalGoal = parseFloat(document.getElementById('setup-total-tons')?.value) || 0; s.inches = parseFloat(document.getElementById('setup-depth')?.value) || 0;
             s.plantName = document.getElementById('setup-plant-name').value; s.plantAddress = document.getElementById('setup-plant-address').value;
             s.salesRep = document.getElementById('setup-sales-rep').value; s.salesRepPhone = document.getElementById('setup-sales-phone').value;
-            s.totalGoal = parseFloat(document.getElementById('setup-total-tons').value) || 0; s.plannedLoads = parseInt(document.getElementById('setup-planned-loads').value) || 0;
-            s.inches = parseFloat(document.getElementById('setup-depth').value) || 0; s.plantClosing = document.getElementById('setup-plant-close').value;
-            window.saveToCloud(); window.updateLiveTraffic(); window.showToast?.("Settings Saved"); window.switchTab('dashboard');
+            window.saveToCloud(); window.updateLiveTraffic(); window.switchTab('dashboard'); window.showToast("Settings Saved");
         };
+        window.handlePlantSelect = (name) => {
+            const plant = PLANT_DB.find(p => p.name === name);
+            if(plant) { document.getElementById('setup-plant-address').value = plant.addr; document.getElementById('setup-sales-rep').value = plant.rep; document.getElementById('setup-sales-phone').value = plant.phone; }
+        };
+        window.generateReport = () => {
+            const s = window.state;
+            document.getElementById('report-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('report-job-title').innerText = s.jobPo || "pavingPM DAILY REPORT";
+            document.getElementById('report-received-val').innerText = s.loads.reduce((sum, l) => sum + l.tons, 0).toFixed(1) + " t";
+            const rBody = document.getElementById('report-table-body');
+            if(rBody) rBody.innerHTML = s.loads.map((l, i) => `<tr><td class="p-4 border">${s.loads.length - i}</td><td class="p-4 border text-center font-bold">${l.time}</td><td class="p-4 border text-center uppercase">${l.truckId}</td><td class="p-4 border text-right">${l.tons.toFixed(2)}</td></tr>`).join('');
+            document.getElementById('main-app-container').classList.add('hidden');
+            document.getElementById('report-view').classList.remove('hidden');
+            window.scrollTo(0,0);
+        };
+        window.closeReport = () => { document.getElementById('main-app-container').classList.remove('hidden'); document.getElementById('report-view').classList.add('hidden'); };
         window.dismissPlantBanner = () => { window.state.plantBannerDismissed = true; window.saveToCloud(); if(document.getElementById('plant-close-banner')) document.getElementById('plant-close-banner').classList.add('hidden'); };
     </script>
 </body>
